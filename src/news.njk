@@ -3,20 +3,20 @@ layout: base.njk
 title: News
 permalink: /news/
 ---
-<section class="page-hero">
-  <p class="breadcrumb"><a href="/">Home</a> / News</p>
-  <h1>News & Events</h1>
+<section class="page-titlebar">
+  <h1>News</h1>
+  <p><a href="/">Home</a> / Communications / News</p>
 </section>
-<section class="content-wrap">
-  <div class="news-list">
+<section class="content-wrap news-page">
+  <div class="news-grid archive-news-grid">
     {% for post in posts %}
-      <article class="news-row">
+      <article class="news-card">
         {% if post.image %}<img src="{{ post.image }}" alt="">{% endif %}
         <div>
           <h2><a href="/news/{{ post.slug }}/">{{ post.title | safe }}</a></h2>
-          <time datetime="{{ post.date }}">{{ post.date | readableDate }}</time>
           <p>{{ post.excerpt | safe }}</p>
-          <a class="read-more" href="/news/{{ post.slug }}/">Read More</a>
+          <a class="button read-more" href="/news/{{ post.slug }}/">Read more...</a>
+          <p class="share-links" aria-label="Share links"><span>t</span><span>f</span><span>in</span></p>
         </div>
       </article>
     {% endfor %}

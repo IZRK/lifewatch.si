@@ -5,14 +5,17 @@ title: LifeWatch Slovenia
 <section class="hero">
   <div class="hero-copy">
     <p class="eyebrow">{{ home.hero.eyebrow }}</p>
-    <h1>{{ home.hero.title }}</h1>
     <p>{{ home.hero.text }}</p>
-    <p class="hero-note">{{ home.hero.note }}</p>
-    <a class="button" href="https://www.lifewatch.eu/">www.lifewatch.eu</a>
   </div>
   <div class="hero-media">
-    <img src="{{ home.hero.image }}" alt="Slovenia landscape and LifeWatch infrastructure">
+    <img src="{{ home.hero.image }}" alt="Slovenia">
   </div>
+</section>
+
+<section class="feature-banner">
+  <a href="{{ home.featureBanner.url }}">
+    <img src="{{ home.featureBanner.image }}" alt="">
+  </a>
 </section>
 
 <section class="section resources">
@@ -24,20 +27,23 @@ title: LifeWatch Slovenia
       <a class="resource-card" href="{{ item.url }}">
         <span class="resource-icon"><img src="{{ item.icon }}" alt=""></span>
         <span>{{ item.title }}</span>
-        <strong>0</strong>
+        <strong>{{ item.count }}</strong>
       </a>
     {% endfor %}
   </div>
-  <a class="button outline" href="https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/home">Open Metadata Portal</a>
+  <a class="button" href="https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/home">Open Metadata Portal</a>
+</section>
+
+<section class="eric-kicker">
+  <h3>We are part of <strong>LifeWatch ERIC</strong>, the e-Science infrastructure</h3>
+  <h3>for research on biodiversity and ecosystems.</h3>
 </section>
 
 <section class="split-section">
-  <div>
-    <p class="eyebrow">We are part of LifeWatch ERIC, the e-Science infrastructure</p>
+  <div class="about-image" aria-hidden="true"></div>
+  <div class="about-copy">
     <h2>LifeWatch ERIC</h2>
     <p>LifeWatch ERIC facilitates the sharing and aggregation of open data and its integration and analysis through advanced modeling tools. Its VREs, together with computing capacity and innovative technologies, allow for testing scenarios of change in the organization and conservation of biodiversity, ecosystems and their services.</p>
-  </div>
-  <div>
     <h2>LifeWatch Slovenia</h2>
     <p>Slovenian researchers cooperating in this infrastructure are seeking to raise Slovenian science to an internationally comparable level in environmental sciences.</p>
     <ul>

@@ -1,19 +1,22 @@
 {
   "hero": {
     "eyebrow": "10 years of LifeWatch Slovenian Consortium",
-    "title": "LifeWatch Slovenia",
-    "text": "LifeWatch Slovenia is one of the national nodes composing LifeWatch ERIC, European Infrastructure consortium providing e-Science research facilities, data resources, web services and Virtual Research Environments to biodiversity and ecosystem research.",
-    "note": "The Research Infrastructure Roadmap 2021-2030 listed LifeWatch among the priority projects for the establishment of NRRI in Sustainable Energy Resources and Environmental Technologies.",
-    "image": "/assets/uploads/2869-1024-Slovenia.png"
+    "text": "LifeWatch Slovenia is one of the national nodes composing LifeWatch ERIC, European Infrastructure consortium providing e-Science research facilities, data resources, web services and Virtual Research Environments (VRE) to biodiversity and ecosystem research. The Research Infrastructure Roadmap 2021-2030 listed LifeWatch among the projects within the priority areas for the establishment of the NRRI in the field of Sustainable Energy Resources and Environmental Technologies.",
+    "image": "/assets/uploads/slovenia.svg"
+  },
+  "featureBanner": {
+    "image": "/assets/uploads/bafkreibhbzfqydiqqhjds6jlttnffziotmxs6nmzs5mknsjagcgmvjjnoq-1024x512.jpg",
+    "url": "https://www.lifewatch.eu/bees-2026/"
   },
   "resources": [
-    { "title": "Dataset", "icon": "/assets/uploads/Datasets.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fdataset&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Research Sites", "icon": "/assets/uploads/researchsite-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2FresearchSite&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Equipment", "icon": "/assets/uploads/Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fequipment&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Services & Databases", "icon": "/assets/uploads/Catalogue-of-Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fservice&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Workflows & Models", "icon": "/assets/uploads/workflows-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fworkflow&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "vLab", "icon": "/assets/uploads/vres.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fvre&resultType=details&sortBy=relevance&from=1&to=20" }
+    { "title": "Dataset", "count": 0, "icon": "/assets/uploads/Datasets.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fdataset&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Research Sites", "count": 0, "icon": "/assets/uploads/researchsite-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2FresearchSite&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Equipment", "count": 0, "icon": "/assets/uploads/Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fequipment&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Services & Databases", "count": 0, "icon": "/assets/uploads/Catalogue-of-Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fservice&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Workflows & Models", "count": 0, "icon": "/assets/uploads/workflows-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fworkflow&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "vLab", "count": 0, "icon": "/assets/uploads/vres.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fvre&resultType=details&sortBy=relevance&from=1&to=20" }
   ],
+  "aboutImage": "/assets/uploads/world-scaled-1-1024x558.jpg",
   "projects": [
     { "title": "RI-SI-LifeWatch", "url": "/projects/ri-si-lifewatch/" },
     { "title": "ENVRI-FAIR", "url": "/projects/envri-fair/" },

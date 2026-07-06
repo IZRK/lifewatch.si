@@ -8,3 +8,5 @@ if (toggle && nav) {
     nav.classList.toggle("is-open", !expanded);
   });
 }
+
+document.documentElement.classList.add("js-ready");

@@ -36,12 +36,10 @@ const coreAssets = [
 ];
 
 const pageIds = {
-  about: 4223,
-  consortium: 10058,
-  projects: 10053,
-  contacts: 6923,
   "biodiversity-observatory-automation-wg": 17397
 };
+
+const curatedPages = ["about", "consortium", "projects", "contacts"];
 
 async function fetchJson(url) {
   const response = await fetch(url);
@@ -155,6 +153,8 @@ async function migratePosts(mediaById) {
 }
 
 async function migratePages() {
+  console.log(`Skipping curated Elementor layout pages: ${curatedPages.join(", ")}`);
+
   for (const [slug, id] of Object.entries(pageIds)) {
     const page = await fetchJson(`${api}/pages/${id}?_fields=id,slug,title,content`);
     const title = decode(page.title.rendered);

@@ -1,10 +1,10 @@
 ---
 layout: base.njk
 ---
-<section class="page-hero">
-  <p class="breadcrumb"><a href="/">Home</a> / {{ title }}</p>
+<section class="page-titlebar">
   <h1>{{ title }}</h1>
+  <p><a href="/">Home</a> / {{ title }}</p>
 </section>
-<article class="content-wrap prose">
+<article class="content-wrap prose page-content">
   {{ content | safe }}
 </article>

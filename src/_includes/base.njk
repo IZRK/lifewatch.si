@@ -10,21 +10,35 @@
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
+    <div class="site-shell">
+    <aside class="sidebar-nav" aria-label="Main navigation">
+      <a class="sidebar-brand" href="/" aria-label="{{ site.title }}">
+        <img src="/assets/uploads/LW-SI-OUTLINED.svg" alt="{{ site.title }}">
+      </a>
+      <nav class="side-menu">
+        {% for item in navigation %}
+          {% set current = page.url == item.url or (item.url != "/" and page.url.indexOf(item.url) == 0) %}
+          <a href="{{ item.url }}" class="{% if current %}is-active{% endif %}{% if item.hasChildren %} has-children{% endif %}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a>
+        {% endfor %}
+      </nav>
+    </aside>
+    <div class="site-main">
+      <header class="site-header">
       <a class="brand" href="/" aria-label="{{ site.title }}">
         <img src="/assets/uploads/LW-SL.png" alt="{{ site.title }}">
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" class="site-nav" aria-label="Main navigation">
         {% for item in navigation %}
-          <a href="{{ item.url }}">{{ item.label }}</a>
+          {% set current = page.url == item.url or (item.url != "/" and page.url.indexOf(item.url) == 0) %}
+          <a href="{{ item.url }}" class="{% if current %}is-active{% endif %}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a>
         {% endfor %}
       </nav>
-    </header>
-    <main id="main">
+      </header>
+      <main id="main">
       {{ content | safe }}
-    </main>
-    <footer class="site-footer">
+      </main>
+      <footer class="site-footer">
       <div>
         <img src="/assets/uploads/LW-SI-white.svg" alt="{{ site.title }}" class="footer-logo">
       </div>
@@ -41,7 +55,9 @@
         <h2>Social</h2>
         <a href="{{ site.twitter }}">Twitter</a>
       </div>
-    </footer>
+      </footer>
+    </div>
+    </div>
     <script src="/assets/js/main.js"></script>
   </body>
 </html>
