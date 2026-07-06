@@ -444,6 +444,11 @@ a:hover {
   text-align: center;
 }
 
+.page-titlebar.is-tall {
+  min-height: 192px;
+  padding: 40px 20px 54px;
+}
+
 .page-titlebar h1 {
   margin: 0 0 16px;
   color: var(--white);
@@ -628,7 +633,7 @@ time {
 
 .page-content {
   padding-top: 30px;
-  color: #6f6f6f;
+  color: #000;
   font-size: 15px;
   line-height: 1.24;
   max-width: var(--max);
@@ -645,6 +650,12 @@ time {
   margin-top: 70px;
 }
 
+.intro-with-map {
+  margin: -30px -20px 0;
+  padding: 44px 10px 60px;
+  background: #f3f3f3;
+}
+
 .intro-with-map > img,
 .contacts-layout > img {
   width: 100%;
@@ -654,19 +665,26 @@ time {
 
 .about-cards {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: 34px;
 }
 
 .about-cards section {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  column-gap: 20px;
+  align-items: start;
   border-top: 2px solid var(--green);
   padding-top: 24px;
 }
 
 .about-cards figure {
-  margin: 0 0 20px;
+  grid-row: 1 / span 2;
+  margin: 0;
 }
 
 .about-cards img {
-  max-height: 120px;
+  width: 110px;
+  max-height: 70px;
   object-fit: contain;
 }
 

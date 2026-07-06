@@ -1,7 +1,7 @@
 ---
 layout: base.njk
 ---
-<section class="page-titlebar">
+<section class="page-titlebar{% if page.url == '/about/' %} is-tall{% endif %}">
   <h1>{{ title }}</h1>
   <p>
     <a href="/">Home</a>
