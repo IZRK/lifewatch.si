@@ -1,0 +1,95 @@
+---
+layout: base.njk
+title: LifeWatch Slovenia
+---
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">{{ home.hero.eyebrow }}</p>
+    <h1>{{ home.hero.title }}</h1>
+    <p>{{ home.hero.text }}</p>
+    <p class="hero-note">{{ home.hero.note }}</p>
+    <a class="button" href="https://www.lifewatch.eu/">www.lifewatch.eu</a>
+  </div>
+  <div class="hero-media">
+    <img src="{{ home.hero.image }}" alt="Slovenia landscape and LifeWatch infrastructure">
+  </div>
+</section>
+
+<section class="section resources">
+  <div class="section-heading">
+    <h2>Resources & Services</h2>
+  </div>
+  <div class="resource-grid">
+    {% for item in home.resources %}
+      <a class="resource-card" href="{{ item.url }}">
+        <span class="resource-icon"><img src="{{ item.icon }}" alt=""></span>
+        <span>{{ item.title }}</span>
+        <strong>0</strong>
+      </a>
+    {% endfor %}
+  </div>
+  <a class="button outline" href="https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/home">Open Metadata Portal</a>
+</section>
+
+<section class="split-section">
+  <div>
+    <p class="eyebrow">We are part of LifeWatch ERIC, the e-Science infrastructure</p>
+    <h2>LifeWatch ERIC</h2>
+    <p>LifeWatch ERIC facilitates the sharing and aggregation of open data and its integration and analysis through advanced modeling tools. Its VREs, together with computing capacity and innovative technologies, allow for testing scenarios of change in the organization and conservation of biodiversity, ecosystems and their services.</p>
+  </div>
+  <div>
+    <h2>LifeWatch Slovenia</h2>
+    <p>Slovenian researchers cooperating in this infrastructure are seeking to raise Slovenian science to an internationally comparable level in environmental sciences.</p>
+    <ul>
+      <li>Coordinate biodiversity research in marine, freshwater and terrestrial ecosystems.</li>
+      <li>Plan common access to data from databases and observatories.</li>
+      <li>Predict computing needs with analytical and modelling tools in virtual laboratories.</li>
+      <li>Support training and educational programs for biodiversity research.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section projects">
+  <div class="section-heading">
+    <h2>Projects</h2>
+  </div>
+  <div class="project-grid">
+    {% for project in home.projects %}
+      <a href="{{ project.url }}">{{ project.title }}</a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section news-preview">
+  <div class="section-heading">
+    <h2>News & Events</h2>
+  </div>
+  <div class="news-grid">
+    {% for post in posts | limit(6) %}
+      <article class="news-card">
+        {% if post.image %}<img src="{{ post.image }}" alt="">{% endif %}
+        <div>
+          <h3><a href="/news/{{ post.slug }}/">{{ post.title | safe }}</a></h3>
+          <time datetime="{{ post.date }}">{{ post.date | readableDate }}</time>
+          <p>{{ post.excerpt | safe }}</p>
+          <a class="read-more" href="/news/{{ post.slug }}/">Read More</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section consortium">
+  <div class="section-heading">
+    <h2>Consortium</h2>
+    <p>The LifeWatch-SI consortium consists of 10 partners from scientific institutions, universities, a regional park, a national museum, and an NGO, with ZRC SAZU serving as national coordinator.</p>
+  </div>
+  <div class="partner-grid">
+    {% for partner in home.partners %}
+      <article class="partner-card">
+        <img src="{{ partner.image }}" alt="">
+        <h3>{{ partner.title }}</h3>
+      </article>
+    {% endfor %}
+  </div>
+</section>

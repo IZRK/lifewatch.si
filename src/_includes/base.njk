@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title or site.title }}</title>
+    <meta name="description" content="{{ description or site.description }}">
+    <link rel="icon" href="/assets/uploads/favicon.png">
+    <link rel="stylesheet" href="/assets/css/main.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="{{ site.title }}">
+        <img src="/assets/uploads/LW-SL.png" alt="{{ site.title }}">
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+        {% for item in navigation %}
+          <a href="{{ item.url }}">{{ item.label }}</a>
+        {% endfor %}
+      </nav>
+    </header>
+    <main id="main">
+      {{ content | safe }}
+    </main>
+    <footer class="site-footer">
+      <div>
+        <img src="/assets/uploads/LW-SI-white.svg" alt="{{ site.title }}" class="footer-logo">
+      </div>
+      <div>
+        <h2>LifeWatch Slovenia</h2>
+        <a href="/about/">About us</a>
+        <a href="/consortium/">Consortium</a>
+      </div>
+      <div>
+        <h2>Contact us</h2>
+        <a href="/contacts/">Contacts</a>
+      </div>
+      <div>
+        <h2>Social</h2>
+        <a href="{{ site.twitter }}">Twitter</a>
+      </div>
+    </footer>
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>

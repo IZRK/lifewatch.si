@@ -1,0 +1,21 @@
+{
+  "name": "lifewatch-11ty",
+  "version": "1.0.0",
+  "description": "Static Eleventy migration of lifewatch.si",
+  "type": "module",
+  "main": ".eleventy.js",
+  "scripts": {
+    "migrate": "node scripts/migrate-wordpress.js",
+    "build": "eleventy",
+    "start": "eleventy --serve --port=8080",
+    "check": "npm run migrate && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "html-entities": "^2.6.0",
+    "slugify": "^1.6.9"
+  }
+}

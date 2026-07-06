@@ -1,0 +1,9 @@
+[
+  { "label": "Home", "url": "/" },
+  { "label": "About us", "url": "/about/" },
+  { "label": "Consortium", "url": "/consortium/" },
+  { "label": "Projects", "url": "/projects/" },
+  { "label": "The Biodiversity Observatory Automation WG", "url": "/biodiversity-observatory-automation-wg/" },
+  { "label": "News", "url": "/news/" },
+  { "label": "Contacts", "url": "/contacts/" }
+]
