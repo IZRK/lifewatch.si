@@ -8,10 +8,10 @@ permalink: "/consortium/"
   <img class="consortium-logo" src="/assets/uploads/LW-SI-OUTLINED.svg" alt="LifeWatch Slovenia">
   <div class="partner-grid">
     {% for partner in home.partners %}
-      <article class="partner-card">
+      <a class="partner-card" href="{{ partner.url }}">
         <img src="{{ partner.image }}" alt="">
         <h3>{{ partner.title }}</h3>
-      </article>
+      </a>
     {% endfor %}
   </div>
 </div>

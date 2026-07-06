@@ -6,7 +6,7 @@
   "main": ".eleventy.js",
   "scripts": {
     "migrate": "node scripts/migrate-wordpress.js",
-    "build": "eleventy",
+    "build": "node scripts/clean-site.js && eleventy",
     "start": "eleventy --serve --port=8080",
     "check": "npm run migrate && npm run build"
   },

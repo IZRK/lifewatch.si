@@ -7,6 +7,9 @@ const sourceUploads = path.resolve(projectRoot, "../lifewatch.si/wp-content/uplo
 const outputUploads = path.resolve(projectRoot, "src/assets/uploads");
 const postsDataPath = path.resolve(projectRoot, "src/_data/posts.json");
 const postDir = path.resolve(projectRoot, "src/news");
+const legacyPostDir = path.resolve(projectRoot, "src/news-legacy");
+const partnersDir = path.resolve(projectRoot, "src/partners");
+const relatedProjectsDir = path.resolve(projectRoot, "src/related-projects");
 const pageDir = path.resolve(projectRoot, "src");
 const api = "https://lifewatch.si/wp-json/wp/v2";
 
@@ -35,11 +38,9 @@ const coreAssets = [
   "famnit_logo_big.png"
 ];
 
-const pageIds = {
-  "biodiversity-observatory-automation-wg": 17397
-};
+const pageIds = {};
 
-const curatedPages = ["about", "consortium", "projects", "contacts"];
+const curatedPages = ["about", "consortium", "projects", "contacts", "biodiversity-observatory-automation-wg"];
 
 async function fetchJson(url) {
   const response = await fetch(url);
@@ -88,9 +89,13 @@ function localizeUrls(html) {
     .replaceAll("https://www.lifewatch.si/wp-content/uploads/", "/assets/uploads/");
 }
 
-function uploadFilename(url) {
+function uploadPath(url) {
   try {
-    return decodeURIComponent(new URL(url).pathname.split("/").pop());
+    const marker = "/wp-content/uploads/";
+    const pathname = new URL(url).pathname;
+    const index = pathname.indexOf(marker);
+    if (index === -1) return decodeURIComponent(pathname.split("/").pop());
+    return decodeURIComponent(pathname.slice(index + marker.length));
   } catch {
     return null;
   }
@@ -116,15 +121,34 @@ async function copyReferencedUploads(html) {
   }
 }
 
+async function migrateCollection(type, outputDir, urlBase) {
+  const items = await fetchJson(`${api}/${type}?per_page=100&_fields=id,date,slug,title,content,featured_media,link`);
+  await fs.mkdir(outputDir, { recursive: true });
+
+  for (const item of items) {
+    const title = decode(item.title.rendered);
+    const body = localizeUrls(stripElementor(item.content.rendered));
+    await copyReferencedUploads(item.content.rendered);
+
+    const file = `${frontMatter({
+      layout: "page.njk",
+      title,
+      permalink: `/${urlBase}/${item.slug}/`
+    })}${body}\n`;
+    await fs.writeFile(path.join(outputDir, `${item.slug}.njk`), file);
+  }
+}
+
 async function migratePosts(mediaById) {
   const posts = await fetchJson(`${api}/posts?per_page=100&_fields=id,date,slug,title,excerpt,content,featured_media`);
   await fs.mkdir(postDir, { recursive: true });
+  await fs.mkdir(legacyPostDir, { recursive: true });
 
   const summaries = [];
   for (const post of posts) {
     const title = decode(post.title.rendered);
     const media = mediaById.get(post.featured_media);
-    const imageFile = media ? uploadFilename(media.source_url) : null;
+    const imageFile = media ? uploadPath(media.source_url) : null;
     if (imageFile) await copyUpload(imageFile);
 
     const body = localizeUrls(stripElementor(post.content.rendered));
@@ -143,10 +167,19 @@ async function migratePosts(mediaById) {
       layout: "post.njk",
       title,
       date: post.date,
-      permalink: `/news/${post.slug}/`,
+      permalink: `/${post.slug}/`,
       image: imageFile ? `/assets/uploads/${imageFile}` : ""
     })}${body}\n`;
     await fs.writeFile(path.join(postDir, `${post.slug}.njk`), file);
+
+    const legacyFile = `${frontMatter({
+      layout: "post.njk",
+      title,
+      date: post.date,
+      permalink: `/news/${post.slug}/`,
+      image: imageFile ? `/assets/uploads/${imageFile}` : ""
+    })}${body}\n`;
+    await fs.writeFile(path.join(legacyPostDir, `${post.slug}.njk`), legacyFile);
   }
 
   await fs.writeFile(postsDataPath, `${JSON.stringify(summaries, null, 2)}\n`);
@@ -188,9 +221,9 @@ async function writeProjectPages() {
   for (const [slug, title, text] of projects) {
     const file = `${frontMatter({
       layout: "page.njk",
-      title,
+      title: `${title} moved`,
       permalink: `/projects/${slug}/`
-    })}<p>${text}</p>\n`;
+    })}<p><a href="/related-projects/${slug}/">${title}</a></p><p>${text}</p>\n`;
     await fs.writeFile(path.join(projectsRoot, `${slug}.njk`), file);
   }
 }
@@ -205,6 +238,8 @@ async function main() {
   const mediaById = new Map(media.map((item) => [item.id, item]));
 
   await migratePosts(mediaById);
+  await migrateCollection("partners", partnersDir, "partners");
+  await migrateCollection("related-projects", relatedProjectsDir, "related-projects");
   await migratePages();
 
   console.log("Migration complete: generated posts, pages, and local uploads.");

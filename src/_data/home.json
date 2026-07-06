@@ -18,20 +18,20 @@
   ],
   "aboutImage": "/assets/uploads/world-scaled-1-1024x558.jpg",
   "projects": [
-    { "title": "RI-SI-LifeWatch", "url": "/projects/ri-si-lifewatch/" },
-    { "title": "ENVRI-FAIR", "url": "/projects/envri-fair/" },
-    { "title": "Open-Earth-Monitor", "url": "/projects/open-earth-monitor/" }
+    { "title": "RI-SI-LifeWatch", "url": "/related-projects/ri-si-lifewatch/" },
+    { "title": "ENVRI-FAIR", "url": "/related-projects/envri-fair/" },
+    { "title": "Open-Earth-Monitor", "url": "/related-projects/open-earth-monitor/" }
   ],
   "partners": [
-    { "title": "Karst Research Institute ZRC SAZU", "image": "/assets/uploads/ZRCSAZU_Institut-za-raziskovanje-krasa_logotip_CMYK-1024x363-1-1.jpg" },
-    { "title": "National Institute of Biology", "image": "/assets/uploads/LOGO-NIB-400x400-1.jpg" },
-    { "title": "Slovenian Forestry Institute", "image": "/assets/uploads/sfi.png" },
-    { "title": "Slovenian Natural History Museum", "image": "/assets/uploads/prirodoslovni-muzej-slo.png" },
-    { "title": "Škocjan Caves Park", "image": "/assets/uploads/347_1.jpg" },
-    { "title": "Tular Cave Laboratory", "image": "/assets/uploads/unnamed-1-768x565.jpg" },
-    { "title": "University of Ljubljana", "image": "/assets/uploads/logo-ul-e1673815382462.jpg" },
-    { "title": "University of Maribor", "image": "/assets/uploads/unnamed-1-1-768x768.jpg" },
-    { "title": "University of Nova Gorica", "image": "/assets/uploads/19_Univerza-NG-600x600-1.jpg" },
-    { "title": "University of Primorska", "image": "/assets/uploads/famnit_logo_big.png" }
+    { "title": "Karst Research Institute ZRC SAZU", "image": "/assets/uploads/ZRCSAZU_Institut-za-raziskovanje-krasa_logotip_CMYK-1024x363-1-1.jpg", "url": "/partners/izrk/" },
+    { "title": "National Institute of Biology", "image": "/assets/uploads/LOGO-NIB-400x400-1.jpg", "url": "/partners/nib/" },
+    { "title": "Slovenian Forestry Institute", "image": "/assets/uploads/sfi.png", "url": "/partners/gozdis/" },
+    { "title": "Slovenian Natural History Museum", "image": "/assets/uploads/prirodoslovni-muzej-slo.png", "url": "/partners/pms-lj/" },
+    { "title": "Škocjan Caves Park", "image": "/assets/uploads/347_1.jpg", "url": "/partners/skocjan-caves-park/" },
+    { "title": "Tular Cave Laboratory", "image": "/assets/uploads/unnamed-1-768x565.jpg", "url": "/partners/tular/" },
+    { "title": "University of Ljubljana", "image": "/assets/uploads/logo-ul-e1673815382462.jpg", "url": "/partners/uni-lj/" },
+    { "title": "University of Maribor", "image": "/assets/uploads/unnamed-1-1-768x768.jpg", "url": "/partners/uni-mb/" },
+    { "title": "University of Nova Gorica", "image": "/assets/uploads/19_Univerza-NG-600x600-1.jpg", "url": "/partners/ung/" },
+    { "title": "University of Primorska", "image": "/assets/uploads/famnit_logo_big.png", "url": "/partners/upr/" }
   ]
 }

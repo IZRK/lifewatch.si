@@ -75,10 +75,10 @@ title: LifeWatch Slovenia
       <article class="news-card">
         {% if post.image %}<img src="{{ post.image }}" alt="">{% endif %}
         <div>
-          <h3><a href="/news/{{ post.slug }}/">{{ post.title | safe }}</a></h3>
+          <h3><a href="/{{ post.slug }}/">{{ post.title | safe }}</a></h3>
           <time datetime="{{ post.date }}">{{ post.date | readableDate }}</time>
           <p>{{ post.excerpt | safe }}</p>
-          <a class="read-more" href="/news/{{ post.slug }}/">Read More</a>
+          <a class="read-more" href="/{{ post.slug }}/">Read More</a>
         </div>
       </article>
     {% endfor %}

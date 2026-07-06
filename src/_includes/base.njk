@@ -17,8 +17,26 @@
       </a>
       <nav class="side-menu">
         {% for item in navigation %}
-          {% set current = page.url == item.url or (item.url != "/" and page.url.indexOf(item.url) == 0) %}
-          <a href="{{ item.url }}" class="{% if current %}is-active{% endif %}{% if item.hasChildren %} has-children{% endif %}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a>
+          {% set childActive = false %}
+          {% if item.children %}
+            {% for child in item.children %}
+              {% if page.url == child.url or page.url.indexOf(child.url) == 0 %}
+                {% set childActive = true %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% set current = page.url == item.url or (item.url != "/" and page.url.indexOf(item.url) == 0) or childActive %}
+          <div class="side-menu-item{% if current %} is-open{% endif %}">
+            <a href="{{ item.url }}" class="{% if current %}is-active{% endif %}{% if item.children %} has-children{% endif %}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a>
+            {% if item.children %}
+              <div class="side-submenu">
+                {% for child in item.children %}
+                  {% set childCurrent = page.url == child.url or page.url.indexOf(child.url) == 0 %}
+                  <a href="{{ child.url }}" class="{% if childCurrent %}is-active{% endif %}"{% if childCurrent %} aria-current="page"{% endif %}>{{ child.label }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
         {% endfor %}
       </nav>
     </aside>
@@ -30,8 +48,26 @@
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" class="site-nav" aria-label="Main navigation">
         {% for item in navigation %}
-          {% set current = page.url == item.url or (item.url != "/" and page.url.indexOf(item.url) == 0) %}
-          <a href="{{ item.url }}" class="{% if current %}is-active{% endif %}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a>
+          {% set childActive = false %}
+          {% if item.children %}
+            {% for child in item.children %}
+              {% if page.url == child.url or page.url.indexOf(child.url) == 0 %}
+                {% set childActive = true %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% set current = page.url == item.url or (item.url != "/" and page.url.indexOf(item.url) == 0) or childActive %}
+          <div class="site-nav-item">
+            <a href="{{ item.url }}" class="{% if current %}is-active{% endif %}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a>
+            {% if item.children %}
+              <div class="site-submenu">
+                {% for child in item.children %}
+                  {% set childCurrent = page.url == child.url or page.url.indexOf(child.url) == 0 %}
+                  <a href="{{ child.url }}" class="{% if childCurrent %}is-active{% endif %}"{% if childCurrent %} aria-current="page"{% endif %}>{{ child.label }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
         {% endfor %}
       </nav>
       </header>

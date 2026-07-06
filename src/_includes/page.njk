@@ -3,8 +3,16 @@ layout: base.njk
 ---
 <section class="page-titlebar">
   <h1>{{ title }}</h1>
-  <p><a href="/">Home</a> / {{ title }}</p>
+  <p>
+    <a href="/">Home</a>
+    {% if page.url.indexOf("/partners/") == 0 %}
+      / <a href="/consortium/">Partners</a>
+    {% elif page.url.indexOf("/related-projects/") == 0 %}
+      / <a href="/projects/">Projects</a>
+    {% endif %}
+    / {{ title }}
+  </p>
 </section>
-<article class="content-wrap prose page-content">
+<article class="content-wrap prose page-content{% if page.url.indexOf('/partners/') == 0 or page.url.indexOf('/related-projects/') == 0 %} detail-content{% endif %}">
   {{ content | safe }}
 </article>

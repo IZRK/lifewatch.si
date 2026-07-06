@@ -1,9 +1,32 @@
 [
   { "label": "Home", "url": "/" },
   { "label": "About us", "url": "/about/" },
-  { "label": "Consortium", "url": "/consortium/", "hasChildren": true },
-  { "label": "Projects", "url": "/projects/", "hasChildren": true },
+  {
+    "label": "Consortium",
+    "url": "/consortium/",
+    "children": [
+      { "label": "Karst Research Institute ZRC SAZU", "url": "/partners/izrk/" },
+      { "label": "National Institute of Biology", "url": "/partners/nib/" },
+      { "label": "Slovenian Forestry Institute", "url": "/partners/gozdis/" },
+      { "label": "Slovenian Natural History Museum", "url": "/partners/pms-lj/" },
+      { "label": "Škocjan Caves Park", "url": "/partners/skocjan-caves-park/" },
+      { "label": "Tular Cave Laboratory", "url": "/partners/tular/" },
+      { "label": "University of Ljubljana", "url": "/partners/uni-lj/" },
+      { "label": "University of Maribor", "url": "/partners/uni-mb/" },
+      { "label": "University of Nova Gorica", "url": "/partners/ung/" },
+      { "label": "University of Primorska", "url": "/partners/upr/" }
+    ]
+  },
+  {
+    "label": "Projects",
+    "url": "/projects/",
+    "children": [
+      { "label": "RI-SI-LifeWatch", "url": "/related-projects/ri-si-lifewatch/" },
+      { "label": "ENVRI-FAIR", "url": "/related-projects/envri-fair/" },
+      { "label": "Open-Earth-Monitor", "url": "/related-projects/open-earth-monitor/" }
+    ]
+  },
   { "label": "The Biodiversity Observatory Automation WG", "url": "/biodiversity-observatory-automation-wg/" },
-  { "label": "News", "url": "/news/" },
+  { "label": "News", "url": "/communications/news/" },
   { "label": "Contacts", "url": "/contacts/" }
 ]
