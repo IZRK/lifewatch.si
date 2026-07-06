@@ -693,6 +693,55 @@ time {
   object-fit: contain;
 }
 
+.contacts-content {
+  padding: 56px 31px 87px 10px;
+  color: #7a7a7a;
+  background: var(--white);
+}
+
+.contacts-content .contacts-layout {
+  grid-template-columns: 365px 693px;
+  gap: 41px;
+  align-items: start;
+}
+
+.contacts-content h2 {
+  margin: 0 0 60px;
+  color: var(--green);
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.contacts-content h3 {
+  margin: 54px 0 20px;
+  color: var(--green);
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.contacts-content h3 + p + h3 {
+  margin-top: 36px;
+}
+
+.contacts-content p {
+  margin: 0 0 16px;
+  color: #7a7a7a;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 18.4px;
+}
+
+.contacts-content .contacts-layout > img {
+  width: 693px;
+  max-width: 100%;
+  max-height: none;
+  margin: 0;
+}
+
 .about-cards {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding-top: 34px;
@@ -822,6 +871,14 @@ time {
 .prose img {
   height: auto;
   margin: 1.5rem 0;
+}
+
+.contacts-content h2 {
+  line-height: 32px;
+}
+
+.contacts-content h3 {
+  line-height: 24px;
 }
 
 .detail-content {
@@ -1100,6 +1157,14 @@ time {
 
   .projects-content {
     padding: 70px 20px;
+  }
+
+  .contacts-content {
+    padding: 56px 20px 90px;
+  }
+
+  .contacts-content .contacts-layout {
+    grid-template-columns: 1fr;
   }
 
   .detail-content > img:first-of-type,
