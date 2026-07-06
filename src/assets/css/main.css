@@ -8,7 +8,7 @@
   --white: #fff;
   --max: 1140px;
   --sidebar: 300px;
-  font-family: "Titillium Web", "Segoe UI", Arial, sans-serif;
+  font-family: Roboto, Arial, sans-serif;
 }
 
 * {
@@ -21,6 +21,17 @@ body {
   background: var(--white);
   font-size: 16px;
   line-height: 1.15;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.page-titlebar,
+.section-heading,
+.split-section {
+  font-family: "Titillium Web", Arial, sans-serif;
 }
 
 img {
@@ -83,6 +94,7 @@ a:hover {
   position: relative;
   display: block;
   padding: 4px 0;
+  font-family: Arial, sans-serif;
   color: #000;
   border-bottom: 0;
   font-size: 12px;
@@ -493,9 +505,11 @@ a:hover {
 .news-row h2,
 .partner-card h3 {
   margin: 0 0 0.5rem;
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 1.35;
+  color: #54595f;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 time {
@@ -523,9 +537,10 @@ time {
 .archive-news-grid .news-card h2 {
   margin: 18px 0 22px;
   color: var(--green);
-  font-size: 22px;
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 19px;
   font-weight: 400;
-  line-height: 1.05;
+  line-height: 1;
 }
 
 .share-links {
@@ -654,6 +669,9 @@ time {
   margin: -30px -20px 0;
   padding: 44px 10px 60px;
   background: #f3f3f3;
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 12px;
+  line-height: 23px;
 }
 
 .intro-with-map > img,
@@ -785,9 +803,10 @@ time {
 
 .detail-content {
   max-width: var(--max);
-  color: #6f6f6f;
-  font-size: 15px;
-  line-height: 1.24;
+  color: #7a7a7a;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.15;
   overflow-wrap: break-word;
 }
 
@@ -809,7 +828,7 @@ time {
 .detail-content h3,
 .detail-content h5 {
   color: var(--green);
-  font-family: "Titillium Web", "Segoe UI", Arial, sans-serif;
+  font-family: "Titillium Web", Arial, sans-serif;
   font-weight: 400;
 }
 
@@ -930,7 +949,10 @@ time {
 
 .site-footer h2 {
   margin: 0 0 0.8rem;
-  font-size: 1.05rem;
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .footer-logo {
