@@ -617,35 +617,67 @@ time {
   text-align: center;
 }
 
+.consortium-content {
+  padding: 9px 10px 58px;
+}
+
 .consortium-intro {
-  max-width: 1040px;
-  margin: 0 auto 34px;
-  color: #777;
-  font-size: 20px;
-  line-height: 1.25;
+  max-width: none;
+  margin: 0 10px 10px;
+  color: #7a7a7a;
+  font-size: 16px;
+  line-height: 18.4px;
   text-align: left;
 }
 
-.consortium-logo {
-  width: 340px;
-  margin: 0 auto 50px;
+.page-content .consortium-logo {
+  display: block;
+  width: 336px;
+  margin: 10px auto 77px;
 }
 
 .consortium-page .partner-grid {
-  padding: 45px 14px;
-  background: #eee;
+  grid-template-columns: repeat(5, 200px);
+  gap: 30px;
+  padding: 0;
+  background: transparent;
 }
 
 .consortium-page .partner-card {
-  min-height: 250px;
-  box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+  position: relative;
+  height: 238px;
+  min-height: 0;
+  padding: 0 0 25px;
+  background: var(--white);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.consortium-page .partner-card img {
+  width: 203px;
+  height: auto;
+  max-height: 203px;
+  margin: 0 auto 14px;
+}
+
+.consortium-page .partner-card:first-child img {
+  width: 214px;
+  height: 133px;
+  object-fit: contain;
+  margin-bottom: 19px;
 }
 
 .consortium-page .partner-card h3 {
+  position: absolute;
+  top: 151.6px;
+  left: 30px;
+  width: 140px;
+  min-height: 61.2px;
   color: var(--green);
-  font-size: 21px;
-  font-weight: 400;
-  line-height: 1.1;
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 20.4px;
+  margin-bottom: 25px;
 }
 
 .breadcrumb,
@@ -664,6 +696,10 @@ time {
   font-size: 15px;
   line-height: 1.24;
   max-width: var(--max);
+}
+
+.page-content.consortium-content {
+  padding: 9px 10px 58px;
 }
 
 .elementor-two-col {
@@ -1165,6 +1201,15 @@ time {
 
   .contacts-content .contacts-layout {
     grid-template-columns: 1fr;
+  }
+
+  .consortium-content {
+    padding: 30px 20px 58px;
+  }
+
+  .consortium-page .partner-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 
   .detail-content > img:first-of-type,
