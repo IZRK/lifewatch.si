@@ -9,10 +9,10 @@
     "url": "https://www.lifewatch.eu/bees-2026/"
   },
   "resources": [
-    { "title": "Dataset", "count": 0, "icon": "/assets/uploads/Datasets.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fdataset&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Research Sites", "count": 0, "icon": "/assets/uploads/researchsite-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2FresearchSite&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Equipment", "count": 0, "icon": "/assets/uploads/Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fequipment&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Services & Databases", "count": 0, "icon": "/assets/uploads/Catalogue-of-Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fservice&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Dataset", "count": 23, "icon": "/assets/uploads/Datasets.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fdataset&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Research Sites", "count": 21, "icon": "/assets/uploads/researchsite-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2FresearchSite&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Equipment", "count": 9, "icon": "/assets/uploads/Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fequipment&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Services & Databases", "count": 1, "icon": "/assets/uploads/Catalogue-of-Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fservice&resultType=details&sortBy=relevance&from=1&to=20" },
     { "title": "Workflows & Models", "count": 0, "icon": "/assets/uploads/workflows-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fworkflow&resultType=details&sortBy=relevance&from=1&to=20" },
     { "title": "vLab", "count": 0, "icon": "/assets/uploads/vres.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fvre&resultType=details&sortBy=relevance&from=1&to=20" }
   ],

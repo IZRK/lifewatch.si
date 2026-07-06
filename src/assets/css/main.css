@@ -4,7 +4,7 @@
   --ink: #000;
   --muted: #65726b;
   --line: #dfe8e2;
-  --soft: #f3f6f4;
+  --soft: #f3f3f3;
   --white: #fff;
   --max: 1140px;
   --sidebar: 300px;
@@ -225,31 +225,35 @@ a:hover {
   gap: clamp(1rem, 3vw, 3rem);
   overflow: hidden;
   max-width: 1960px;
-  min-height: 364px;
+  min-height: 391px;
   margin: 0 auto;
   padding: 0 0 0 58px;
   background: var(--soft);
 }
 
 .hero p {
-  max-width: 430px;
+  max-width: 408px;
   margin: 0 0 1rem;
   color: #111;
-  font-size: 16px;
-  line-height: 1.15;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .hero-copy {
   align-self: start;
+  width: 437px;
   padding-top: 106px;
 }
 
 .hero .eyebrow {
-  max-width: 540px;
+  max-width: 437px;
+  margin-bottom: 8px;
   color: var(--green);
-  font-size: 21px;
-  font-weight: 700;
-  line-height: 1.08;
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 29px;
 }
 
 .hero-media {
@@ -280,7 +284,7 @@ a:hover {
 .feature-banner {
   max-width: none;
   margin: 0 auto;
-  padding: 12px 54px 20px;
+  padding: 10px 54px 20px;
   background: var(--white);
 }
 
@@ -319,8 +323,7 @@ a:hover {
 
 .section,
 .split-section,
-.content-wrap,
-.post-wrap {
+.content-wrap {
   max-width: var(--max);
   margin: 0 auto;
   padding: 58px 20px;
@@ -344,6 +347,7 @@ a:hover {
 }
 
 .resources {
+  padding-top: 50px;
   text-align: center;
 }
 
@@ -444,10 +448,16 @@ a:hover {
   background: var(--white);
 }
 
+.content-wrap.news-page {
+  padding-right: 0;
+  padding-left: 0;
+  background: var(--soft);
+}
+
 .page-titlebar {
   display: grid;
   place-items: center;
-  min-height: 130px;
+  min-height: 203px;
   padding: 24px 20px;
   color: var(--white);
   background-color: #00983d;
@@ -526,10 +536,17 @@ time {
 }
 
 .archive-news-grid {
-  padding-top: 90px;
+  grid-template-columns: repeat(3, 380px);
+  gap: 0;
+  width: 1140px;
+  max-width: 100%;
+  padding-top: 102px;
 }
 
 .archive-news-grid .news-card {
+  width: 380px;
+  max-width: 100%;
+  padding: 10px;
   border-left: 1px solid #eee;
   border-right: 1px solid #eee;
 }
@@ -634,11 +651,6 @@ time {
 .breadcrumb,
 .breadcrumb a {
   color: var(--white);
-}
-
-.post-header .breadcrumb,
-.post-header .breadcrumb a {
-  color: var(--green);
 }
 
 .prose {
@@ -909,33 +921,79 @@ time {
   object-fit: cover;
 }
 
-.post-wrap {
-  max-width: 940px;
+.post-titlebar h1 {
+  max-width: 1040px;
 }
 
-.post-header {
-  margin-bottom: 2rem;
-  text-align: center;
+.post-page-content {
+  padding-top: 44px;
+  padding-bottom: 40px;
+  color: #7a7a7a;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.15;
 }
 
-.post-header h1 {
-  margin: 0 0 1rem;
+.post-prose {
+  max-width: 100%;
+}
+
+.post-prose h2 {
+  margin: 0 0 19px;
   color: var(--green);
-  font-size: clamp(2rem, 5vw, 3.6rem);
-  line-height: 1.08;
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.15;
 }
 
-.post-image {
-  width: 100%;
-  max-height: 520px;
+.post-prose > img:first-of-type {
+  float: left;
+  width: min(49%, 540px);
+  max-height: 332px;
+  margin: 0 20px 0 0;
   object-fit: cover;
-  margin-bottom: 2rem;
+}
+
+.post-prose > p:first-of-type {
+  margin-top: 0;
+}
+
+.post-prose .button,
+.post-prose > a:last-child {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 172px;
+  min-height: 39px;
+  margin-top: 39px;
+  padding: 12px 24px;
+  background: var(--green);
+  color: var(--white);
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
+.post-prose > a:last-child:hover {
+  background: var(--green-dark);
+  text-decoration: none;
+}
+
+.post-page-content::after {
+  display: block;
+  clear: both;
+  content: "";
 }
 
 .site-footer {
+  clear: both;
   display: grid;
   grid-template-columns: 1.3fr repeat(3, 1fr);
   gap: 2rem;
+  min-height: 300px;
+  align-content: center;
   padding: 3rem clamp(1rem, 4vw, 3rem);
   background: var(--green);
   color: var(--white);

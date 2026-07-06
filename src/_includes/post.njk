@@ -1,16 +1,12 @@
 ---
 layout: base.njk
 ---
-<article class="post-wrap">
-  <header class="post-header">
-    <p class="breadcrumb"><a href="/">Home</a> / <a href="/communications/news/">News</a></p>
-    <h1>{{ title }}</h1>
-    <time datetime="{{ date }}">{{ date | readableDate }}</time>
-  </header>
-  {% if image %}
-    <img class="post-image" src="{{ image }}" alt="">
-  {% endif %}
-  <div class="prose">
+<section class="page-titlebar post-titlebar">
+  <h1>{{ title }}</h1>
+  <p><a href="/">Home</a> / <a href="/communications/news/">News</a> / {{ title }}</p>
+</section>
+<article class="content-wrap post-page-content">
+  <div class="prose post-prose">
     {{ content | safe }}
   </div>
 </article>
