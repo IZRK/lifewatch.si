@@ -803,6 +803,56 @@ time {
   object-fit: contain;
 }
 
+.about-content {
+  padding: 0 20px 58px;
+}
+
+.about-content .intro-with-map {
+  grid-template-columns: 550px 550px;
+  gap: 20px;
+  margin: 0 -20px;
+  padding: 30px 10px 116px;
+}
+
+.about-content .intro-with-map > img {
+  width: 550px;
+  max-height: none;
+  margin: 10px 0 0;
+}
+
+.about-content .about-cards {
+  grid-template-columns: 570px 570px;
+  gap: 0;
+  margin: 50px -20px 0;
+  padding-top: 0;
+}
+
+.about-content .about-cards section {
+  grid-template-columns: 123.5px minmax(0, 1fr);
+  column-gap: 15px;
+  padding: 10px 10px 0;
+  border-top: 0;
+}
+
+.about-content .about-cards figure {
+  margin: 0;
+}
+
+.about-content .about-cards img {
+  width: 123.5px;
+  max-height: none;
+  margin: 0;
+}
+
+.about-content .about-cards h3 {
+  margin: 0 0 8px;
+  color: var(--green);
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 22.8px;
+}
+
 .projects-content {
   padding: 170px 30px 86px;
   background: var(--soft);
@@ -1201,6 +1251,17 @@ time {
 
   .contacts-content .contacts-layout {
     grid-template-columns: 1fr;
+  }
+
+  .about-content .intro-with-map,
+  .about-content .about-cards {
+    grid-template-columns: 1fr;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .about-content .intro-with-map > img {
+    width: 100%;
   }
 
   .consortium-content {
