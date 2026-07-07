@@ -1054,6 +1054,7 @@ time {
 }
 
 .detail-content {
+  position: relative;
   max-width: var(--max);
   color: #7a7a7a;
   font-family: Roboto, Arial, sans-serif;
@@ -1064,16 +1065,22 @@ time {
 
 .detail-content > h2:first-child {
   margin-top: 0;
+  margin-bottom: 60px;
   text-align: left;
+  line-height: 32px;
 }
 
 .detail-content > h2:first-child + h5 {
   clear: none;
+  width: 540px;
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: 40px;
   text-align: left;
 }
 
 .detail-content > img:first-of-type + h5 {
-  margin-top: 190px;
+  margin-top: 44px;
 }
 
 .detail-content h2,
@@ -1086,6 +1093,7 @@ time {
 
 .detail-content h2 {
   font-size: 32px;
+  line-height: 32px;
 }
 
 .detail-content h3 {
@@ -1095,13 +1103,24 @@ time {
 
 .detail-content h5 {
   clear: both;
-  margin: 44px 0 26px;
+  width: 1120px;
+  margin: 44px 0 50px;
+  margin-left: -10px;
   font-size: 24px;
+  line-height: 24px;
   text-align: center;
 }
 
 .detail-content p {
   margin: 0 0 1rem;
+}
+
+.detail-content > h2:first-child + h5 ~ p:nth-of-type(-n + 6) {
+  width: 540px;
+}
+
+.detail-content > h2:first-child + h5 ~ p:nth-of-type(6) {
+  min-height: 55.2px;
 }
 
 .detail-content figure {
@@ -1126,21 +1145,105 @@ time {
 }
 
 .detail-content > img:first-of-type {
-  float: right;
-  width: min(49%, 503px);
-  margin: -240px 0 30px 44px;
+  position: absolute;
+  top: 101px;
+  right: 20px;
+  width: 540px;
+  max-height: none;
+  margin: 0;
 }
 
 .detail-content h5 + img,
 .detail-content h5 + figure {
   float: left;
-  width: min(48%, 520px);
-  margin: 0 26px 24px 0;
+  width: 540px;
+  margin: 0 20px 24px 0;
+}
+
+.detail-content h5 + img + p,
+.detail-content h5 + img + p + p {
+  box-sizing: border-box;
+  width: 540px;
+  margin-left: 560px;
+  padding-right: 60px;
 }
 
 .detail-content figure img {
   max-height: 220px;
   margin: 0 auto;
+}
+
+.detail-image-box-grid {
+  display: grid;
+  grid-template-columns: 540px 540px;
+  column-gap: 20px;
+  row-gap: 0;
+  margin: 6px 0 0;
+}
+
+.detail-image-box {
+  display: grid;
+  grid-template-columns: 121.2px 403.8px;
+  column-gap: 15px;
+  align-items: start;
+  align-self: start;
+}
+
+.detail-image-box figure {
+  margin: 0;
+}
+
+.detail-image-box img {
+  display: block;
+  width: 121.2px;
+  max-width: 121.2px;
+  max-height: none;
+  margin: 0;
+}
+
+.detail-image-box h3 {
+  margin: 0 0 15px;
+  color: var(--green);
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 22.8px;
+}
+
+.detail-image-box p {
+  width: 403.8px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 16.1px;
+}
+
+.detail-image-box:nth-child(1) {
+  min-height: 263.3px;
+}
+
+.detail-image-box:nth-child(1) p {
+  min-height: 225.3px;
+}
+
+.detail-image-box:nth-child(2) {
+  min-height: 295.5px;
+}
+
+.detail-image-box:nth-child(2) p {
+  min-height: 257.5px;
+}
+
+.detail-image-box:nth-child(3) {
+  min-height: 182.8px;
+  margin-top: -12.2px;
+}
+
+.detail-image-box:nth-child(3) p {
+  min-height: 144.8px;
+}
+
+.detail-image-box-grid + h5 {
+  margin-top: 30px;
 }
 
 .news-list {
@@ -1482,6 +1585,7 @@ time {
   .detail-content > img:first-of-type,
   .detail-content h5 + img,
   .detail-content h5 + figure {
+    position: static;
     float: none;
     width: 100%;
     margin: 18px 0;
@@ -1489,6 +1593,43 @@ time {
 
   .detail-content > img:first-of-type + h5 {
     margin-top: 44px;
+  }
+
+  .detail-content h5,
+  .detail-content > h2:first-child + h5,
+  .detail-content > h2:first-child + h5 ~ p:nth-of-type(-n + 6),
+  .detail-content h5 + img + p,
+  .detail-content h5 + img + p + p {
+    width: auto;
+    margin-left: 0;
+    padding-right: 0;
+  }
+
+  .detail-image-box-grid {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+  }
+
+  .detail-image-box,
+  .detail-image-box:nth-child(1),
+  .detail-image-box:nth-child(2),
+  .detail-image-box:nth-child(3) {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    margin-top: 0;
+  }
+
+  .detail-image-box img {
+    width: min(180px, 100%);
+    max-width: 100%;
+  }
+
+  .detail-image-box p,
+  .detail-image-box:nth-child(1) p,
+  .detail-image-box:nth-child(2) p,
+  .detail-image-box:nth-child(3) p {
+    width: auto;
+    min-height: 0;
   }
 }
 
