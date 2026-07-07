@@ -1165,8 +1165,12 @@ time {
   max-width: 1040px;
 }
 
+.post-titlebar {
+  min-height: 192px;
+}
+
 .post-page-content {
-  padding-top: 44px;
+  padding-top: 20px;
   padding-bottom: 40px;
   color: #7a7a7a;
   font-family: Roboto, Arial, sans-serif;
@@ -1176,6 +1180,19 @@ time {
 
 .post-prose {
   max-width: 100%;
+}
+
+.post-prose:has(> p:first-child img) {
+  display: grid;
+  grid-template-columns: 540px 540px;
+  column-gap: 20px;
+  align-items: start;
+}
+
+.post-prose:has(> p:first-child img) > * {
+  grid-column: 2;
+  box-sizing: border-box;
+  padding-right: 60px;
 }
 
 .post-prose h2 {
@@ -1197,6 +1214,33 @@ time {
 
 .post-prose > p:first-of-type {
   margin-top: 0;
+}
+
+.post-prose p {
+  margin: 0 0 16px;
+}
+
+.post-prose > p:first-child:has(img) {
+  grid-column: 1;
+  grid-row: 1 / span 20;
+  float: none;
+  width: 540px;
+  max-width: none;
+  margin: 0 20px 0 0;
+  padding-right: 0;
+}
+
+.post-prose > p:first-child:has(img) img {
+  display: block;
+  width: 540px;
+  max-width: 100%;
+  max-height: none;
+  margin: 0;
+  object-fit: cover;
+}
+
+.post-prose:has(> p:first-child img) > p:nth-of-type(7) {
+  min-height: 36.8px;
 }
 
 .post-prose .button,
@@ -1419,6 +1463,20 @@ time {
 
   .footer-logo {
     margin-left: 0;
+  }
+
+  .post-prose:has(> p:first-child img) {
+    display: block;
+  }
+
+  .post-prose:has(> p:first-child img) > * {
+    padding-right: 0;
+  }
+
+  .post-prose > p:first-child:has(img) {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 16px;
   }
 
   .detail-content > img:first-of-type,
