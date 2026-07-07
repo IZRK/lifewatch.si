@@ -948,6 +948,90 @@ time {
   margin: 0 0 45px;
 }
 
+.wg-content {
+  padding: 59px 20px 0;
+}
+
+.wg-content .wg-hero {
+  gap: 20px;
+  padding: 0 0 150px;
+}
+
+.wg-content .wg-hero img {
+  width: 768px;
+  max-width: 100%;
+  margin: 0;
+}
+
+.wg-content .wg-hero .button {
+  display: inline-block;
+  min-height: 0;
+  box-sizing: border-box;
+  width: 138.6px;
+  margin-top: 0;
+  padding: 12px 24px;
+  border-radius: 3px;
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
+.wg-content .wg-intro {
+  grid-template-columns: 550px 501px;
+  gap: 44.5px;
+  align-items: start;
+  margin: 0 -20px;
+  padding: 0 10px;
+  background: var(--white);
+  color: #7a7a7a;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 18.4px;
+}
+
+.wg-content .wg-intro > div {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.wg-content .wg-intro p {
+  margin: 0 0 16px;
+}
+
+.wg-content .wg-intro p:first-child {
+  letter-spacing: 0.12px;
+}
+
+.wg-content .wg-intro img {
+  width: 501px;
+  margin: 0 auto;
+}
+
+.wg-content .wg-detail {
+  margin: 0 -170px;
+  padding: 130px 0 20px;
+}
+
+.wg-content .wg-detail h2 {
+  margin: 0 0 50px;
+  color: var(--green);
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.wg-content .wg-detail p {
+  width: 1120px;
+  max-width: 100%;
+  margin: 0 auto 26px;
+  color: #7a7a7a;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 18.4px;
+}
+
 .prose h2,
 .prose h3 {
   color: var(--green);
@@ -1144,11 +1228,11 @@ time {
 .site-footer {
   clear: both;
   display: grid;
-  grid-template-columns: 1.3fr repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(4, 355px);
+  gap: 0;
   min-height: 300px;
-  align-content: center;
-  padding: 3rem clamp(1rem, 4vw, 3rem);
+  align-content: start;
+  padding: 71px 0 0;
   background: var(--green);
   color: var(--white);
 }
@@ -1156,11 +1240,15 @@ time {
 .site-footer a {
   display: block;
   color: var(--white);
-  margin: 0.25rem 0;
+  min-height: 26px;
+  margin: 0;
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 26px;
 }
 
 .site-footer h2 {
-  margin: 0 0 0.8rem;
+  margin: 0 0 19px;
   font-family: "Titillium Web", Arial, sans-serif;
   font-size: 20px;
   font-weight: 400;
@@ -1168,7 +1256,33 @@ time {
 }
 
 .footer-logo {
-  width: 220px;
+  width: 213px;
+  margin-left: 71px;
+}
+
+.site-footer > div:nth-child(4) h2 {
+  display: none;
+}
+
+.site-footer > div:nth-child(4) a {
+  width: 50px;
+  height: 50px;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 10%;
+  background: #1da1f2;
+  font-size: 0;
+  line-height: 50px;
+  text-align: center;
+}
+
+.site-footer > div:nth-child(4) a::before {
+  content: "t";
+  color: var(--white);
+  font-family: Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 50px;
 }
 
 @media (max-width: 1024px) {
@@ -1226,6 +1340,30 @@ time {
     margin: 0;
   }
 
+  .wg-content {
+    padding: 40px 20px 0;
+  }
+
+  .wg-content .wg-hero {
+    padding-bottom: 60px;
+  }
+
+  .wg-content .wg-intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .wg-content .wg-intro img {
+    width: 100%;
+  }
+
+  .wg-content .wg-detail {
+    margin: 0;
+    padding-top: 60px;
+  }
+
   .about-image {
     min-height: 360px;
   }
@@ -1271,6 +1409,14 @@ time {
   .consortium-page .partner-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
+  }
+
+  .site-footer {
+    padding: 48px 24px;
+  }
+
+  .footer-logo {
+    margin-left: 0;
   }
 
   .detail-content > img:first-of-type,
