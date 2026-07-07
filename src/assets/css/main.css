@@ -1153,6 +1153,28 @@ time {
   margin: 0;
 }
 
+.detail-content > img[src$="/sfi.png"] {
+  right: 40px;
+  width: 500px;
+}
+
+.detail-content > img[src$="/unnamed.jpg"] {
+  width: 331.4px;
+}
+
+.detail-content > img[src$="/logo-ul-1.jpg"] {
+  right: 110px;
+  width: 360px;
+}
+
+.detail-content > img[src$="/logo.png"] + p,
+.detail-content > img[src$="/prirodoslovni-muzej-slo.png"] + p {
+  box-sizing: border-box;
+  width: 540px;
+  margin-left: 560px;
+  padding-right: 60px;
+}
+
 .detail-content h5 + img,
 .detail-content h5 + figure {
   float: left;
@@ -1162,6 +1184,18 @@ time {
 
 .detail-content h5 + img + p,
 .detail-content h5 + img + p + p {
+  box-sizing: border-box;
+  width: 540px;
+  margin-left: 560px;
+  padding-right: 60px;
+}
+
+.detail-content h5 + img[src*="Oceanographic-buoy"] + p + p + p,
+.detail-content h5 + img[src*="Oceanographic-buoy"] + p + p + p + p,
+.detail-content h5 + img[src*="Oceanographic-buoy"] + p + p + p + p + p,
+.detail-content h5 + img[src*="357925d564a2559fe183"] + p + p + p,
+.detail-content h5 + img[src*="357925d564a2559fe183"] + p + p + p + p,
+.detail-content h5 + img[src*="357925d564a2559fe183"] + p + p + p + p + p {
   box-sizing: border-box;
   width: 540px;
   margin-left: 560px;
