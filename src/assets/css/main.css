@@ -449,9 +449,11 @@ a:hover {
 }
 
 .content-wrap.news-page {
+  min-height: 1260px;
+  padding: 0;
   padding-right: 0;
   padding-left: 0;
-  background: var(--soft);
+  background: var(--white);
 }
 
 .page-titlebar {
