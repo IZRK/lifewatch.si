@@ -1307,6 +1307,68 @@ time {
   min-height: 23px;
 }
 
+.simple-related-content {
+  height: auto;
+  padding: 79px 10px 70px;
+}
+
+.simple-related-content > img,
+.simple-related-content > img:nth-of-type(1),
+.simple-related-content > img:nth-of-type(2) {
+  position: absolute;
+  top: 79px;
+  right: auto;
+  left: 10px;
+  width: 550px;
+  max-width: 550px;
+  max-height: none;
+  margin: 0;
+}
+
+.simple-related-content > p,
+.simple-related-content > p:nth-of-type(-n + 3) {
+  box-sizing: border-box;
+  width: 550px;
+  min-height: 0;
+  margin: 0 0 16px 570px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 18.4px;
+}
+
+.simple-related-content > p:nth-of-type(4),
+.simple-related-content > p:nth-of-type(5),
+.simple-related-content > p:nth-of-type(9),
+.simple-related-content > p:nth-of-type(10) {
+  min-height: 0;
+}
+
+.envri-related-content > p:nth-of-type(2),
+.envri-related-content > p:nth-of-type(3) {
+  min-height: 73.6px;
+}
+
+.envri-related-content > p:nth-of-type(4) {
+  min-height: 55.2px;
+}
+
+.simple-related-content > a {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 208.3px;
+  min-height: 39px;
+  margin: 20px 0 0 570px;
+  padding: 12px 24px;
+  border-radius: 3px;
+  background: var(--green);
+  color: var(--white);
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+  text-align: center;
+}
+
 .news-list {
   display: grid;
   gap: 1.5rem;
@@ -1713,6 +1775,26 @@ time {
   .related-content > img,
   .related-content > img:nth-of-type(1),
   .related-content > img:nth-of-type(2) {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    margin: 18px 0;
+  }
+
+  .simple-related-content {
+    padding: 40px 20px 58px;
+  }
+
+  .simple-related-content > p,
+  .simple-related-content > p:nth-of-type(-n + 3),
+  .simple-related-content > a {
+    width: auto;
+    margin-left: 0;
+  }
+
+  .simple-related-content > img,
+  .simple-related-content > img:nth-of-type(1),
+  .simple-related-content > img:nth-of-type(2) {
     position: static;
     width: 100%;
     max-width: 100%;

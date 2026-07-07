@@ -13,6 +13,6 @@ layout: base.njk
     / {{ title }}
   </p>
 </section>
-<article class="content-wrap prose page-content{% if page.url.indexOf('/partners/') == 0 or page.url.indexOf('/related-projects/') == 0 %} detail-content{% endif %}{% if page.url.indexOf('/related-projects/') == 0 %} related-content{% endif %}{% if page.url == '/projects/' %} projects-content{% endif %}{% if page.url == '/contacts/' %} contacts-content{% endif %}{% if page.url == '/consortium/' %} consortium-content{% endif %}{% if page.url == '/about/' %} about-content{% endif %}{% if page.url == '/biodiversity-observatory-automation-wg/' %} wg-content{% endif %}">
+<article class="content-wrap prose page-content{% if page.url.indexOf('/partners/') == 0 or page.url.indexOf('/related-projects/') == 0 %} detail-content{% endif %}{% if page.url.indexOf('/related-projects/') == 0 %} related-content{% endif %}{% if page.url == '/related-projects/envri-fair/' or page.url == '/related-projects/open-earth-monitor/' %} simple-related-content{% endif %}{% if page.url == '/related-projects/envri-fair/' %} envri-related-content{% endif %}{% if page.url == '/projects/' %} projects-content{% endif %}{% if page.url == '/contacts/' %} contacts-content{% endif %}{% if page.url == '/consortium/' %} consortium-content{% endif %}{% if page.url == '/about/' %} about-content{% endif %}{% if page.url == '/biodiversity-observatory-automation-wg/' %} wg-content{% endif %}">
   {{ content | safe }}
 </article>
