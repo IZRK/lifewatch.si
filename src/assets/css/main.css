@@ -1171,6 +1171,10 @@ time {
   width: 360px;
 }
 
+.detail-content > img[src*="Logo-Skocjan-Caves"] + h5 {
+  margin-top: 82px;
+}
+
 .detail-content > img[src*="19_Univerza-NG-600x600-1.jpg"] + p + h5,
 .detail-content > img[src$="/prirodoslovni-muzej-slo.png"] + p + h5 {
   margin-top: 197px;
@@ -1198,7 +1202,7 @@ time {
 }
 
 .detail-content > img[src$="/logo.png"] + p + h5 {
-  margin-top: 97px;
+  margin-top: 120px;
 }
 
 .detail-content h5 + img,
@@ -1236,7 +1240,7 @@ time {
 }
 
 .detail-content h5 + img[src*="the-exit"] + p + p + p + h5 {
-  margin-top: 157px;
+  margin-top: 131px;
 }
 
 .detail-content h5 + img[src*="jhfa"] + p + p + p {
@@ -1380,6 +1384,7 @@ time {
   grid-template-columns: 540px 540px;
   column-gap: 20px;
   margin-top: 0;
+  padding-bottom: 50px;
 }
 
 .nib-publication-col p {
@@ -1394,7 +1399,7 @@ time {
   grid-template-columns: 540px 540px;
   column-gap: 20px;
   margin-top: 0;
-  padding-bottom: 19px;
+  padding-bottom: 56px;
 }
 
 .uni-lj-publication-col {
@@ -1438,7 +1443,7 @@ time {
   grid-template-columns: 540px 540px;
   column-gap: 20px;
   margin-top: 0;
-  padding-bottom: 92px;
+  padding-bottom: 86px;
 }
 
 .tular-publication-col {
@@ -1449,6 +1454,10 @@ time {
   display: block;
   width: 540px;
   margin: 0 0 16px;
+}
+
+.detail-content > img[src$="/sfi.png"] + h5 {
+  margin-top: 82px;
 }
 
 .gozdis-research-layout,
@@ -1537,9 +1546,119 @@ time {
   margin-top: 30px;
 }
 
+.gozdis-research-row {
+  grid-template-columns: 530px 530px;
+}
+
+.gozdis-research-row img,
+.gozdis-equipment-layout img {
+  width: 530px;
+  max-width: 530px;
+}
+
+.gozdis-research-copy p,
+.gozdis-equipment-layout p,
+.gozdis-equipment-layout ul {
+  width: 530px;
+}
+
+.gozdis-research-layout + h5 {
+  margin-top: 30px;
+}
+
+.gozdis-project-grid + h5 {
+  margin-top: 46px;
+}
+
+.gozdis-equipment-layout {
+  grid-template-columns: 530px 530px;
+}
+
+.gozdis-equipment-layout + h5 {
+  margin-top: 31px;
+}
+
+.gozdis-publications {
+  display: grid;
+  grid-template-columns: 530px 530px;
+  column-gap: 20px;
+  margin-top: 0;
+  padding-bottom: 129px;
+}
+
+.gozdis-publication-col p {
+  display: block;
+  width: 530px;
+  margin: 0 0 16px;
+}
+
+.detail-content > img[src*="famnit_logo_big"] + h5 {
+  margin-top: 83px;
+}
+
+.detail-content h5 + img[src*="244052508"] + p + p + p + p + p + p + img[src$="/stepchangelogo.jpg"] + h5 {
+  margin-top: -11px;
+}
+
+.upr-projects {
+  display: grid;
+  row-gap: 26px;
+  margin-top: 0;
+}
+
+.upr-project-row {
+  display: grid;
+  grid-template-columns: 246.3px 813.7px;
+  column-gap: 20px;
+  align-items: start;
+}
+
+.upr-project-row:nth-child(1) {
+  min-height: 727px;
+}
+
+.upr-project-row:nth-child(2) {
+  min-height: 618px;
+}
+
+.upr-project-row img {
+  display: block;
+  width: 246.3px;
+  max-width: 246.3px;
+  height: auto;
+  max-height: none;
+  margin: 0;
+}
+
+.upr-project-row p {
+  width: 813.7px;
+  margin: 0 0 16px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 18.4px;
+}
+
+.upr-projects + h5 {
+  margin-top: 66px;
+}
+
+.upr-publications {
+  display: grid;
+  grid-template-columns: 530px 530px;
+  column-gap: 20px;
+  margin-top: 0;
+  padding-bottom: 37px;
+}
+
+.upr-publication-col p {
+  display: block;
+  width: 530px;
+  margin: 0 0 16px;
+}
+
 .tular-research-layout {
   display: grid;
-  row-gap: 20px;
+  row-gap: 11px;
 }
 
 .tular-research-row {
@@ -1575,33 +1694,48 @@ time {
 
 .uni-mb-ri-layout {
   display: grid;
-  grid-template-columns: 241px 839px;
+  grid-template-columns: 236.3px 823.7px;
   column-gap: 20px;
   align-items: start;
   margin-top: 0;
+  padding-top: 10px;
 }
 
 .uni-mb-ri-layout img {
-  width: 241px;
-  max-width: 241px;
+  width: 236.3px;
+  max-width: 236.3px;
   max-height: none;
   margin: 0;
 }
 
 .uni-mb-ri-layout h5 {
-  width: 839px;
-  margin: 0 0 26px;
+  width: 823.7px;
+  margin: 20px 0 40px;
 }
 
 .uni-mb-ri-layout p {
-  width: 839px;
+  width: 823.7px;
   margin: 0 0 16px;
   font-size: 16px;
   line-height: 18.4px;
 }
 
-.uni-mb-ri-layout + p + p + h5 {
-  margin-top: 106px;
+.uni-mb-ri-layout + h5 {
+  margin-top: 124px;
+}
+
+.uni-mb-publications {
+  display: grid;
+  grid-template-columns: 530px 530px;
+  column-gap: 20px;
+  margin-top: 0;
+  padding-bottom: 294px;
+}
+
+.uni-mb-publication-col p {
+  display: block;
+  width: 530px;
+  margin: 0 0 16px;
 }
 
 .uni-lj-project-grid .detail-image-box {
@@ -1650,7 +1784,7 @@ time {
 }
 
 .detail-content h5 + img[src*="244052508"] + p + p + p + p + p + p + img[src$="/stepchangelogo.jpg"] + h5 {
-  margin-top: 0;
+  margin-top: -11px;
 }
 
 .related-content {
@@ -2141,6 +2275,11 @@ time {
     padding-right: 0;
   }
 
+  .detail-content h5 + img[src*="244052508"] + p + p + p + p + p + p + img[src$="/stepchangelogo.jpg"] {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .detail-image-box-grid {
     grid-template-columns: 1fr;
     margin-top: 0;
@@ -2173,6 +2312,8 @@ time {
   .gozdis-research-row,
   .uni-lj-research-row,
   .gozdis-equipment-layout,
+  .upr-projects,
+  .upr-project-row,
   .tular-research-layout,
   .tular-research-row,
   .uni-mb-ri-layout {
@@ -2184,6 +2325,7 @@ time {
   .gozdis-research-row img,
   .uni-lj-research-row img,
   .gozdis-equipment-layout img,
+  .upr-project-row img,
   .tular-research-row img,
   .uni-mb-ri-layout img,
   .gozdis-project-grid .detail-image-box img,
@@ -2196,6 +2338,7 @@ time {
   .uni-lj-research-copy p,
   .gozdis-equipment-layout p,
   .gozdis-equipment-layout ul,
+  .upr-project-row p,
   .tular-research-layout p,
   .tular-research-layout > p,
   .uni-mb-ri-layout h5,
@@ -2217,6 +2360,14 @@ time {
   }
 
   .nib-publication-col p {
+    width: auto;
+  }
+
+  .gozdis-publications {
+    grid-template-columns: 1fr;
+  }
+
+  .gozdis-publication-col p {
     width: auto;
   }
 
@@ -2242,6 +2393,29 @@ time {
 
   .tular-publication-col,
   .tular-publication-col p {
+    width: auto;
+  }
+
+  .upr-publications {
+    grid-template-columns: 1fr;
+  }
+
+  .upr-publication-col {
+    box-sizing: border-box;
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .upr-publication-col p {
+    width: auto;
+  }
+
+  .uni-mb-publications {
+    grid-template-columns: 1fr;
+  }
+
+  .uni-mb-publication-col p {
     width: auto;
   }
 
