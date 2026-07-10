@@ -1,7 +1,7 @@
 {
   "hero": {
     "eyebrow": "10 years of LifeWatch Slovenian Consortium",
-    "text": "LifeWatch Slovenia is one of the national nodes composing LifeWatch ERIC, European Infrastructure consortium providing e-Science research facilities, data resources, web services and Virtual Research Environments (VRE) to biodiversity and ecosystem research. The Research Infrastructure Roadmap 2021-2030 listed LifeWatch among the projects within the priority areas for the establishment of the NRRI in the field of Sustainable Energy Resources and Environmental Technologies.",
+    "text": "LifeWatch Slovenia is one of the national nodes composing LifeWatch ERIC, European Infrastructure consortium providing e-Science research facilities, data resources, web services and Virtual Research Environments (VRE) to biodiversity and ecosystem research. The Research Infrastructure Roadmap 2021-2030, listed LifeWatch among the projects within the priority areas for the establishment of the NRRI in the field of Sustainable Energy Resources and Environmental Technologies.",
     "image": "/assets/uploads/slovenia.svg"
   },
   "featureBanner": {
@@ -9,21 +9,21 @@
     "url": "https://www.lifewatch.eu/bees-2026/"
   },
   "resources": [
-    { "title": "Dataset", "count": 23, "icon": "/assets/uploads/Datasets.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fdataset&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Research Sites", "count": 21, "icon": "/assets/uploads/researchsite-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2FresearchSite&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Equipment", "count": 9, "icon": "/assets/uploads/Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fequipment&resultType=details&sortBy=relevance&from=1&to=20" },
-    { "title": "Services & Databases", "count": 1, "icon": "/assets/uploads/Catalogue-of-Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fservice&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Dataset", "count": 0, "icon": "/assets/uploads/Datasets.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fdataset&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Research Sites", "count": 0, "icon": "/assets/uploads/researchsite-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2FresearchSite&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Equipment", "count": 0, "icon": "/assets/uploads/Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fequipment&resultType=details&sortBy=relevance&from=1&to=20" },
+    { "title": "Services & Databases", "count": 0, "icon": "/assets/uploads/Catalogue-of-Services.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fservice&resultType=details&sortBy=relevance&from=1&to=20" },
     { "title": "Workflows & Models", "count": 0, "icon": "/assets/uploads/workflows-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fworkflow&resultType=details&sortBy=relevance&from=1&to=20" },
     { "title": "vLab", "count": 0, "icon": "/assets/uploads/vres.svg", "url": "https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/search?facet.q=type%2Fvre&resultType=details&sortBy=relevance&from=1&to=20" }
   ],
   "aboutImage": "/assets/uploads/world-scaled-1-1024x558.jpg",
   "projects": [
-    { "title": "RI-SI-LifeWatch", "url": "/related-projects/ri-si-lifewatch/" },
-    { "title": "ENVRI-FAIR", "url": "/related-projects/envri-fair/" },
-    { "title": "Open-Earth-Monitor", "url": "/related-projects/open-earth-monitor/" }
+    { "title": "RI-SI-LifeWatch", "image": "/assets/uploads/RI-SI-1536x981-1.png", "url": "/related-projects/ri-si-lifewatch/" },
+    { "title": "ENVRI-FAIR", "image": "/assets/uploads/ENVRI-FAIR-project-1024x654-1.png", "url": "/related-projects/envri-fair/" },
+    { "title": "Open-Earth-Monitor", "image": "/assets/uploads/OEM_Logo_Horizontal_Dark_Transparent_Background_205x38.png", "url": "/related-projects/open-earth-monitor/" }
   ],
   "partners": [
-    { "title": "Karst Research Institute ZRC SAZU", "image": "/assets/uploads/ZRCSAZU_Institut-za-raziskovanje-krasa_logotip_CMYK-1024x363-1-1.jpg", "url": "/partners/izrk/" },
+    { "title": "Karst Research Institute ZRC SAZU", "image": "/assets/uploads/ZRCSAZU_Institut-za-raziskovanje-krasa_logotip_CMYK-1024x363-1-2.jpg", "url": "/partners/izrk/" },
     { "title": "National Institute of Biology", "image": "/assets/uploads/LOGO-NIB-400x400-1.jpg", "url": "/partners/nib/" },
     { "title": "Slovenian Forestry Institute", "image": "/assets/uploads/sfi.png", "url": "/partners/gozdis/" },
     { "title": "Slovenian Natural History Museum", "image": "/assets/uploads/prirodoslovni-muzej-slo.png", "url": "/partners/pms-lj/" },

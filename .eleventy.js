@@ -11,6 +11,15 @@ export default function (eleventyConfig) {
     }).format(new Date(value));
   });
 
+  eleventyConfig.addFilter("wordpressDate", (value) => {
+    const date = new Date(value);
+    const monthAndYear = new Intl.DateTimeFormat("en-GB", {
+      month: "long",
+      year: "numeric",
+    }).format(date);
+    return `${date.getDate()}. ${monthAndYear}`;
+  });
+
   eleventyConfig.addFilter("limit", (items, count) => {
     return Array.isArray(items) ? items.slice(0, count) : items;
   });

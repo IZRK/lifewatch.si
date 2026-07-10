@@ -3,12 +3,14 @@ layout: base.njk
 title: LifeWatch Slovenia
 ---
 <section class="hero">
-  <div class="hero-copy">
-    <p class="eyebrow">{{ home.hero.eyebrow }}</p>
-    <p>{{ home.hero.text }}</p>
-  </div>
-  <div class="hero-media">
-    <img src="{{ home.hero.image }}" alt="Slovenia">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow">{{ home.hero.eyebrow }}</p>
+      <p>{{ home.hero.text }}</p>
+    </div>
+    <div class="hero-media">
+      <img src="{{ home.hero.image }}" alt="">
+    </div>
   </div>
 </section>
 
@@ -18,7 +20,7 @@ title: LifeWatch Slovenia
   </a>
 </section>
 
-<section class="section resources">
+<section class="home-section resources">
   <div class="section-heading">
     <h2>Resources & Services</h2>
   </div>
@@ -26,7 +28,7 @@ title: LifeWatch Slovenia
     {% for item in home.resources %}
       <a class="resource-card" href="{{ item.url }}">
         <span class="resource-icon"><img src="{{ item.icon }}" alt=""></span>
-        <span>{{ item.title }}</span>
+        <span class="resource-title">{{ item.title }}</span>
         <strong>{{ item.count }}</strong>
       </a>
     {% endfor %}
@@ -40,33 +42,41 @@ title: LifeWatch Slovenia
 </section>
 
 <section class="split-section">
-  <div class="about-image" aria-hidden="true"></div>
-  <div class="about-copy">
-    <h2>LifeWatch ERIC</h2>
-    <p>LifeWatch ERIC facilitates the sharing and aggregation of open data and its integration and analysis through advanced modeling tools. Its VREs, together with computing capacity and innovative technologies, allow for testing scenarios of change in the organization and conservation of biodiversity, ecosystems and their services.</p>
-    <h2>LifeWatch Slovenia</h2>
-    <p>Slovenian researchers cooperating in this infrastructure are seeking to raise Slovenian science to an internationally comparable level in environmental sciences.</p>
-    <ul>
-      <li>Coordinate biodiversity research in marine, freshwater and terrestrial ecosystems.</li>
-      <li>Plan common access to data from databases and observatories.</li>
-      <li>Predict computing needs with analytical and modelling tools in virtual laboratories.</li>
-      <li>Support training and educational programs for biodiversity research.</li>
-    </ul>
+  <div class="split-inner">
+    <div class="about-image" aria-hidden="true"></div>
+    <div class="about-copy">
+      <h2>LifeWatch ERIC</h2>
+      <p>LifeWatch ERIC facilitates the sharing and aggregation of open data and its integration and analysis through advanced modeling tools. Its VREs, together with computing capacity and the most innovative technologies, allow for testing scenarios of change in the organization and conservation of biodiversity, ecosystems and their services in response to different pressures.</p>
+      <div class="about-spacer" aria-hidden="true"></div>
+      <h2>LifeWatch Slovenia</h2>
+      <p>Slovenian researchers cooperating in this infrastructure are seeking to raise Slovenian science to an internationally comparable level in Environmental<br>sciences.</p>
+      <p>LifeWatch is part of the Slovenian Strategy for Smart Specialization<br>(S4) and Horizon 2020, focusing on the development of technological solu-<br>tions in the field of biodiversity and socio-ecosystem research.</p>
+      <p>Since 2015, the Slovenian Consortium, LifeWatch-SI, has been promoting<br>the importance of integrating and networking information &amp; data in order to:</p>
+      <ul>
+        <li>coordinate biodiversity research in marine, freshwater and terrestrial eco-<br>systems;</li>
+        <li>plan common access to a vast array of data from various databases and<br>observatories;</li>
+        <li>predict computing capabilities with analytical and modelling tools in virtual<br>laboratories;</li>
+        <li>support training and educational programs that will enable a proper under-<br>standing of biodiversity</li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<section class="section projects">
+<section class="home-section projects">
   <div class="section-heading">
     <h2>Projects</h2>
   </div>
   <div class="project-grid">
     {% for project in home.projects %}
-      <a href="{{ project.url }}">{{ project.title }}</a>
+      <article class="project-card">
+        <a class="project-image" href="{{ project.url }}"><img src="{{ project.image }}" alt=""></a>
+        <h3><a href="{{ project.url }}">{{ project.title }}</a></h3>
+      </article>
     {% endfor %}
   </div>
 </section>
 
-<section class="section news-preview">
+<section class="home-section news-preview">
   <div class="section-heading">
     <h2>News & Events</h2>
   </div>
@@ -76,26 +86,26 @@ title: LifeWatch Slovenia
         {% if post.image %}<img src="{{ post.image }}" alt="">{% endif %}
         <div>
           <h3><a href="/{{ post.slug }}/">{{ post.title | safe }}</a></h3>
-          <time datetime="{{ post.date }}">{{ post.date | readableDate }}</time>
+          <p class="post-meta"><time datetime="{{ post.date }}">{{ post.date | wordpressDate }}</time><span>No Comments</span></p>
           <p>{{ post.excerpt | safe }}</p>
-          <a class="read-more" href="/{{ post.slug }}/">Read More</a>
+          <a class="read-more" href="/{{ post.slug }}/">Read More &raquo;</a>
         </div>
       </article>
     {% endfor %}
   </div>
 </section>
 
-<section class="section consortium">
+<section class="home-section consortium">
   <div class="section-heading">
     <h2>Consortium</h2>
     <p>The LifeWatch-SI consortium consists of 10 partners from scientific institutions, universities, a regional park, a national museum, and an NGO, with ZRC SAZU serving as national coordinator.</p>
   </div>
   <div class="partner-grid">
     {% for partner in home.partners %}
-      <article class="partner-card">
-        <img src="{{ partner.image }}" alt="">
+      <a class="partner-card" href="{{ partner.url }}">
+        <span class="partner-image"><img src="{{ partner.image }}" alt=""></span>
         <h3>{{ partner.title }}</h3>
-      </article>
+      </a>
     {% endfor %}
   </div>
 </section>

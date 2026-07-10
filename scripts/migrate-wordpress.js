@@ -69,9 +69,12 @@ function stripElementor(html) {
     .trim();
 }
 
-function plainExcerpt(html, length = 220) {
-  const text = decode(html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim());
-  return text.length > length ? `${text.slice(0, length).trim()}...` : text;
+function plainExcerpt(html, length = 25) {
+  const text = decode(html.replace(/<[^>]*>/g, ""))
+    .replace(/\s*\[…]\s*$/, "")
+    .replace(/[ \t\r\n]+/g, " ")
+    .trim();
+  return text.split(" ").slice(0, length).join(" ");
 }
 
 function frontMatter(data) {
