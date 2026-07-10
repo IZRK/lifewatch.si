@@ -2296,6 +2296,25 @@ time {
     margin: 18px 0;
   }
 
+  article.page-content.detail-content p {
+    width: auto !important;
+    max-width: 100%;
+    margin-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  article.page-content.detail-content img {
+    width: 100% !important;
+    max-width: 100%;
+    margin-left: 0 !important;
+  }
+
+  article.page-content.detail-content .detail-image-box {
+    grid-template-columns: minmax(0, 1fr);
+    width: auto;
+    max-width: 100%;
+  }
+
   .detail-content > img:first-of-type + h5 {
     margin-top: 44px;
   }
@@ -2509,6 +2528,13 @@ time {
     width: 100%;
     max-width: 100%;
     margin: 18px 0;
+  }
+}
+
+@media (min-width: 1025px) {
+  .wg-content .wg-detail {
+    margin-right: -20px;
+    margin-left: -20px;
   }
 }
 
