@@ -109,6 +109,12 @@ async function copyUpload(file) {
   const source = path.join(sourceUploads, file);
   const target = path.join(outputUploads, file);
   try {
+    await fs.access(target);
+    return true;
+  } catch {
+    // Copy only assets that have not already been reviewed or optimized locally.
+  }
+  try {
     await fs.mkdir(path.dirname(target), { recursive: true });
     await fs.copyFile(source, target);
     return true;
@@ -124,11 +130,21 @@ async function copyReferencedUploads(html) {
   }
 }
 
-async function migrateCollection(type, outputDir, urlBase) {
+async function migrateCollection(type, outputDir, urlBase, { preserveExisting = false } = {}) {
   const items = await fetchJson(`${api}/${type}?per_page=100&_fields=id,date,slug,title,content,featured_media,link`);
   await fs.mkdir(outputDir, { recursive: true });
 
   for (const item of items) {
+    const outputPath = path.join(outputDir, `${item.slug}.njk`);
+    if (preserveExisting) {
+      try {
+        await fs.access(outputPath);
+        continue;
+      } catch {
+        // Generate newly added WordPress entries while retaining reviewed templates.
+      }
+    }
+
     const title = decode(item.title.rendered);
     const body = localizeUrls(stripElementor(item.content.rendered));
     await copyReferencedUploads(item.content.rendered);
@@ -138,7 +154,7 @@ async function migrateCollection(type, outputDir, urlBase) {
       title,
       permalink: `/${urlBase}/${item.slug}/`
     })}${body}\n`;
-    await fs.writeFile(path.join(outputDir, `${item.slug}.njk`), file);
+    await fs.writeFile(outputPath, file);
   }
 }
 
@@ -146,6 +162,14 @@ async function migratePosts(mediaById) {
   const posts = await fetchJson(`${api}/posts?per_page=100&_fields=id,date,slug,title,excerpt,content,featured_media`);
   await fs.mkdir(postDir, { recursive: true });
   await fs.mkdir(legacyPostDir, { recursive: true });
+
+  let reviewedSummaries = [];
+  try {
+    reviewedSummaries = JSON.parse(await fs.readFile(postsDataPath, "utf8"));
+  } catch {
+    // The first migration has no reviewed summary data yet.
+  }
+  const reviewedBySlug = new Map(reviewedSummaries.map((post) => [post.slug, post]));
 
   const summaries = [];
   for (const post of posts) {
@@ -157,12 +181,14 @@ async function migratePosts(mediaById) {
     const body = localizeUrls(stripElementor(post.content.rendered));
     await copyReferencedUploads(post.content.rendered);
 
+    const reviewed = reviewedBySlug.get(post.slug);
     summaries.push({
       id: post.id,
       date: post.date,
       slug: post.slug,
       title,
       excerpt: plainExcerpt(post.excerpt.rendered || post.content.rendered),
+      archiveExcerpt: reviewed?.archiveExcerpt || `${plainExcerpt(post.content.rendered, 45)}...`,
       image: imageFile ? `/assets/uploads/${imageFile}` : ""
     });
 
@@ -241,8 +267,8 @@ async function main() {
   const mediaById = new Map(media.map((item) => [item.id, item]));
 
   await migratePosts(mediaById);
-  await migrateCollection("partners", partnersDir, "partners");
-  await migrateCollection("related-projects", relatedProjectsDir, "related-projects");
+  await migrateCollection("partners", partnersDir, "partners", { preserveExisting: true });
+  await migrateCollection("related-projects", relatedProjectsDir, "related-projects", { preserveExisting: true });
   await migratePages();
 
   console.log("Migration complete: generated posts, pages, and local uploads.");
