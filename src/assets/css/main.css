@@ -323,9 +323,11 @@ a:hover {
 }
 
 .resource-card strong {
+  min-width: 3ch;
   color: var(--ink);
   font-size: 21px;
   font-weight: 400;
+  font-variant-numeric: tabular-nums;
   line-height: 21px;
 }
 

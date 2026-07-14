@@ -12,6 +12,15 @@ const partnersDir = path.resolve(projectRoot, "src/partners");
 const relatedProjectsDir = path.resolve(projectRoot, "src/related-projects");
 const pageDir = path.resolve(projectRoot, "src");
 const api = "https://lifewatch.si/wp-json/wp/v2";
+const externalAssetAliases = new Map([
+  [
+    "https://www.lifewatch.eu/wp-content/uploads/2025/12/Subterranean-biodiversity.jpg",
+    "/assets/uploads/Subterranean-biodiversity-768x378-1.jpg"
+  ]
+]);
+const uploadAliases = new Map([
+  ["LifeWatching_News-1.png", "LifeWatching_News.png"]
+]);
 
 const coreAssets = [
   "LW-SL.png",
@@ -50,6 +59,26 @@ async function fetchJson(url) {
   return response.json();
 }
 
+async function fetchAll(endpoint) {
+  const items = [];
+  let page = 1;
+  let totalPages = 1;
+
+  do {
+    const separator = endpoint.includes("?") ? "&" : "?";
+    const response = await fetch(`${endpoint}${separator}page=${page}`);
+    if (!response.ok) {
+      throw new Error(`Failed ${response.status} ${response.url}`);
+    }
+
+    items.push(...await response.json());
+    totalPages = Number(response.headers.get("x-wp-totalpages")) || 1;
+    page += 1;
+  } while (page <= totalPages);
+
+  return items;
+}
+
 function stripElementor(html) {
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, "")
@@ -65,6 +94,7 @@ function stripElementor(html) {
     .replace(/<section>\s*/gi, "")
     .replace(/\s*<\/section>/gi, "")
     .replace(/<span>\s*<\/span>/gi, "")
+    .replace(/<h([1-6])>\s*<h\1([^>]*)>([\s\S]*?)<\/h\1>\s*<\/h\1>/gi, "<h$1$2>$3</h$1>")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
@@ -87,9 +117,29 @@ function frontMatter(data) {
 }
 
 function localizeUrls(html) {
-  return html
+  let localized = html
     .replaceAll("https://lifewatch.si/wp-content/uploads/", "/assets/uploads/")
     .replaceAll("https://www.lifewatch.si/wp-content/uploads/", "/assets/uploads/");
+
+  for (const [remote, local] of externalAssetAliases) {
+    localized = localized.replaceAll(remote, local);
+  }
+
+  return localized;
+}
+
+function firstLocalImage(html) {
+  return html.match(/<img[^>]+src="(\/assets\/uploads\/[^"]+)"/i)?.[1] || "";
+}
+
+async function localAssetExists(url) {
+  if (!url.startsWith("/assets/uploads/")) return false;
+  try {
+    await fs.access(path.join(outputUploads, url.slice("/assets/uploads/".length)));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function uploadPath(url) {
@@ -131,7 +181,7 @@ async function copyReferencedUploads(html) {
 }
 
 async function migrateCollection(type, outputDir, urlBase, { preserveExisting = false } = {}) {
-  const items = await fetchJson(`${api}/${type}?per_page=100&_fields=id,date,slug,title,content,featured_media,link`);
+  const items = await fetchAll(`${api}/${type}?per_page=100&_fields=id,date,slug,title,content,featured_media,link`);
   await fs.mkdir(outputDir, { recursive: true });
 
   for (const item of items) {
@@ -159,7 +209,7 @@ async function migrateCollection(type, outputDir, urlBase, { preserveExisting = 
 }
 
 async function migratePosts(mediaById) {
-  const posts = await fetchJson(`${api}/posts?per_page=100&_fields=id,date,slug,title,excerpt,content,featured_media`);
+  const posts = await fetchAll(`${api}/posts?per_page=100&_fields=id,date,slug,title,excerpt,content,featured_media`);
   await fs.mkdir(postDir, { recursive: true });
   await fs.mkdir(legacyPostDir, { recursive: true });
 
@@ -175,13 +225,20 @@ async function migratePosts(mediaById) {
   for (const post of posts) {
     const title = decode(post.title.rendered);
     const media = mediaById.get(post.featured_media);
-    const imageFile = media ? uploadPath(media.source_url) : null;
-    if (imageFile) await copyUpload(imageFile);
-
     const body = localizeUrls(stripElementor(post.content.rendered));
     await copyReferencedUploads(post.content.rendered);
 
     const reviewed = reviewedBySlug.get(post.slug);
+    const imageFile = media ? uploadPath(media.source_url) : null;
+    const localImageFile = uploadAliases.get(imageFile) || imageFile;
+    const copiedFeaturedImage = localImageFile ? await copyUpload(localImageFile) : false;
+    const bodyImage = firstLocalImage(body);
+    const image = copiedFeaturedImage
+      ? `/assets/uploads/${localImageFile}`
+      : await localAssetExists(bodyImage)
+        ? bodyImage
+        : reviewed?.image || "";
+
     summaries.push({
       id: post.id,
       date: post.date,
@@ -189,7 +246,7 @@ async function migratePosts(mediaById) {
       title,
       excerpt: plainExcerpt(post.excerpt.rendered || post.content.rendered),
       archiveExcerpt: reviewed?.archiveExcerpt || `${plainExcerpt(post.content.rendered, 45)}...`,
-      image: imageFile ? `/assets/uploads/${imageFile}` : ""
+      image
     });
 
     const file = `${frontMatter({
@@ -197,7 +254,7 @@ async function migratePosts(mediaById) {
       title,
       date: post.date,
       permalink: `/${post.slug}/`,
-      image: imageFile ? `/assets/uploads/${imageFile}` : ""
+      image
     })}${body}\n`;
     await fs.writeFile(path.join(postDir, `${post.slug}.njk`), file);
 
@@ -206,7 +263,7 @@ async function migratePosts(mediaById) {
       title,
       date: post.date,
       permalink: `/news/${post.slug}/`,
-      image: imageFile ? `/assets/uploads/${imageFile}` : ""
+      image
     })}${body}\n`;
     await fs.writeFile(path.join(legacyPostDir, `${post.slug}.njk`), legacyFile);
   }
@@ -263,7 +320,7 @@ async function main() {
     await copyUpload(asset);
   }
 
-  const media = await fetchJson(`${api}/media?per_page=100&_fields=id,source_url,alt_text`);
+  const media = await fetchAll(`${api}/media?per_page=100&_fields=id,source_url,alt_text`);
   const mediaById = new Map(media.map((item) => [item.id, item]));
 
   await migratePosts(mediaById);

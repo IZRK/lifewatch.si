@@ -29,11 +29,11 @@ title: LifeWatch Slovenia
       <a class="resource-card" href="{{ item.url }}">
         <span class="resource-icon"><img src="{{ item.icon }}" alt=""></span>
         <span class="resource-title">{{ item.title }}</span>
-        <strong>{{ item.count }}</strong>
+        <strong class="resource-count" data-resource-type="{{ item.metadataType }}">{{ item.count }}</strong>
       </a>
     {% endfor %}
   </div>
-  <a class="button" href="https://metadata.izrk.zrc-sazu.si/geonetwork/srv/eng/catalog.search#/home">Open Metadata Portal</a>
+  <a class="button" href="https://metadata.izrk.zrc-sazu.si/">Open Metadata Portal</a>
 </section>
 
 <section class="eric-kicker">
@@ -98,7 +98,7 @@ title: LifeWatch Slovenia
 <section class="home-section consortium">
   <div class="section-heading">
     <h2>Consortium</h2>
-    <p>The LifeWatch-SI consortium consists of 10 partners from scientific institutions, universities, a regional park, a national museum, and an NGO, with ZRC SAZU serving as national coordinator.</p>
+    <p>The LifeWatch-SI consortium consists of 10 partners from nationally and internationally recognised scientific institutions, universities, a regional park, a national museum, and an NGO, all active in the field of biodiversity and ecosystem research, with ZRC SAZU serving as the national coordinator and headquarters of LifeWatch-SI.</p>
   </div>
   <div class="partner-grid">
     {% for partner in home.partners %}
