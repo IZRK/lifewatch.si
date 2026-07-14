@@ -32,7 +32,11 @@
           <div class="side-menu-item{% if current %} is-open{% endif %}">
             <a href="{{ item.url }}" class="{% if current %}is-active{% endif %}{% if item.children %} has-children{% endif %}"{% if exactCurrent %} aria-current="page"{% endif %}>{{ item.label }}</a>
             {% if item.children %}
-              <div class="side-submenu">
+              <button class="side-submenu-toggle" type="button" aria-expanded="{% if current %}true{% else %}false{% endif %}" aria-controls="side-submenu-{{ loop.index }}">
+                <span class="visually-hidden">Toggle {{ item.label }} submenu</span>
+                <span class="side-submenu-toggle-icon" aria-hidden="true">{% if current %}-{% else %}+{% endif %}</span>
+              </button>
+              <div class="side-submenu" id="side-submenu-{{ loop.index }}">
                 {% for child in item.children %}
                   {% set childCurrent = page.url == child.url or page.url.indexOf(child.url) == 0 %}
                   <a href="{{ child.url }}" class="{% if childCurrent %}is-active{% endif %}"{% if childCurrent %} aria-current="page"{% endif %}>{{ child.label }}</a>

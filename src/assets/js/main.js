@@ -25,9 +25,21 @@ if (toggle && nav) {
   });
 
   window.addEventListener("resize", () => {
-    if (window.matchMedia("(min-width: 1440px)").matches) closeMenu();
+    if (window.matchMedia("(min-width: 1025px)").matches) closeMenu();
   });
 }
+
+document.querySelectorAll(".side-submenu-toggle").forEach((button) => {
+  button.addEventListener("click", () => {
+    const expanded = button.getAttribute("aria-expanded") === "true";
+    const item = button.closest(".side-menu-item");
+    const icon = button.querySelector(".side-submenu-toggle-icon");
+
+    button.setAttribute("aria-expanded", String(!expanded));
+    item?.classList.toggle("is-open", !expanded);
+    if (icon) icon.textContent = expanded ? "+" : "-";
+  });
+});
 
 document.documentElement.classList.add("js-ready");
 

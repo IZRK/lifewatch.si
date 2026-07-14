@@ -693,7 +693,7 @@ a:hover {
   }
 
   .brand {
-    width: 210px;
+    width: min(30vw, 307.2px);
   }
 
   .hero {
@@ -712,8 +712,8 @@ a:hover {
   }
 
   .hero-copy p {
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 18px;
   }
 
   .hero-copy .eyebrow {
@@ -773,6 +773,11 @@ a:hover {
 }
 
 @media (min-width: 768px) {
+  .hero-copy .eyebrow {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
   .eric-kicker h2 {
     font-size: 30px;
   }
@@ -809,7 +814,42 @@ a:hover {
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1200px) {
+  .hero-copy .eyebrow {
+    font-size: 20px;
+    line-height: 25px;
+  }
+}
+
+@media (min-width: 1360px) {
+  .hero-copy .eyebrow {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .hero-copy .eyebrow {
+    font-size: 28px;
+    line-height: 35px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .hero-copy .eyebrow {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+@media (min-width: 2000px) {
+  .hero-copy .eyebrow {
+    font-size: 36px;
+    line-height: 45px;
+  }
+}
+
+@media (min-width: 1025px) {
   .eric-kicker h2 {
     font-size: 32px;
   }
@@ -842,8 +882,8 @@ a:hover {
     position: relative;
     display: flex;
     align-items: center;
-    min-height: 24px;
-    padding: 4px 0;
+    min-height: 25px;
+    padding: 5px 22px;
     color: var(--ink);
     font-family: Arial, sans-serif;
     font-size: 12px;
@@ -861,13 +901,37 @@ a:hover {
   }
 
   .side-menu a.has-children::after {
+    content: none;
+  }
+
+  .side-menu-item {
+    position: relative;
+  }
+
+  .side-menu a.has-children {
+    padding-right: 54px;
+  }
+
+  .side-submenu-toggle {
     position: absolute;
-    top: 5px;
-    right: 0;
+    top: 0;
+    right: 10px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 25px;
+    padding: 0;
+    border: 0;
+    background: transparent;
     color: #7e7e7e;
-    content: "+";
-    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .side-submenu-toggle-icon {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
     font-weight: 400;
+    line-height: 20px;
   }
 
   .side-submenu {
@@ -875,12 +939,13 @@ a:hover {
     padding: 2px 0 8px 16px;
   }
 
-  .side-menu-item:hover .side-submenu,
-  .side-menu-item:focus-within .side-submenu {
+  .side-menu-item.is-open .side-submenu {
     display: block;
   }
 
   .side-submenu a {
+    min-height: 35px;
+    padding: 10px 15px 10px 22px;
     font-weight: 400;
     text-transform: none;
   }
