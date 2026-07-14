@@ -35,11 +35,15 @@
 }
 
 .page-titlebar h1 {
+  width: 100%;
+  max-width: 100%;
   margin: 0 0 16px;
   color: var(--white);
   font-size: 41px;
   font-weight: 400;
   line-height: 1;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .page-titlebar p,
@@ -231,6 +235,7 @@
 .prose {
   max-width: 850px;
   margin: 0 auto;
+  overflow-wrap: anywhere;
 }
 
 .page-content {
@@ -681,7 +686,7 @@
   font-family: Roboto, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.15;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .detail-content > h2:first-child {
@@ -1028,6 +1033,10 @@
   width: 540px;
   margin: 0 0 16px;
   font-family: Arial, sans-serif;
+}
+
+.nib-publication-col {
+  min-width: 0;
 }
 
 .nib-content {
@@ -1683,7 +1692,7 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1439px) {
 
   .wg-content {
     padding: 40px 20px 0;
@@ -2024,7 +2033,7 @@
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1440px) {
   .archive-card:nth-child(-n + 3) {
     min-height: 535px;
   }

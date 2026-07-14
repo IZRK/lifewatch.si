@@ -25,7 +25,7 @@ if (toggle && nav) {
   });
 
   window.addEventListener("resize", () => {
-    if (window.matchMedia("(min-width: 1025px)").matches) closeMenu();
+    if (window.matchMedia("(min-width: 1440px)").matches) closeMenu();
   });
 }
 
