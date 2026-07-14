@@ -208,8 +208,8 @@ a:hover {
 }
 
 .hero-copy .eyebrow {
-  width: 107%;
-  margin-bottom: 8px;
+  width: auto;
+  margin: 0 0 8px;
   color: var(--green);
   font-family: "Titillium Web", sans-serif;
   font-size: 24px;
@@ -218,15 +218,17 @@ a:hover {
 }
 
 .hero-media {
-  height: 218px;
-  overflow: hidden;
+  display: grid;
+  min-height: 218px;
+  padding: 0 20px 24px;
+  place-items: center;
 }
 
 .hero-media img {
   width: 100%;
   height: 100%;
-  max-width: none;
-  object-fit: cover;
+  max-height: 260px;
+  object-fit: contain;
 }
 
 /* Homepage sections */
@@ -679,17 +681,19 @@ a:hover {
   }
 
   .hero-inner {
-    position: relative;
-    display: block;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     height: clamp(204px, 34.1837cqw, 670px);
   }
 
   .hero-copy {
-    position: absolute;
-    top: 27.3%;
-    left: 5.1%;
-    width: 36.4%;
-    padding: 0;
+    align-self: center;
+    padding: 0 7% 0 10.2%;
+  }
+
+  .hero-copy p {
+    font-size: clamp(11px, 0.714cqw, 14px);
+    line-height: clamp(14px, 0.918cqw, 18px);
   }
 
   .hero-copy .eyebrow {
@@ -699,11 +703,12 @@ a:hover {
   }
 
   .hero-media {
-    position: absolute;
-    top: -48.8%;
-    right: 5.56%;
-    width: 41.17%;
-    height: 199.25%;
+    min-height: 0;
+    padding: clamp(16px, 2.55cqw, 50px) 8% clamp(16px, 2.55cqw, 50px) 2%;
+  }
+
+  .hero-media img {
+    max-height: 100%;
   }
 
   .eric-kicker {
