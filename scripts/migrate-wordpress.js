@@ -7,10 +7,10 @@ const sourceUploads = path.resolve(projectRoot, "../lifewatch.si/wp-content/uplo
 const outputUploads = path.resolve(projectRoot, "src/assets/uploads");
 const postsDataPath = path.resolve(projectRoot, "src/_data/posts.json");
 const postDir = path.resolve(projectRoot, "src/news");
-const legacyPostDir = path.resolve(projectRoot, "src/news-legacy");
+const deprecatedPostAliasDir = path.resolve(projectRoot, "src/news-legacy");
+const deprecatedProjectAliasDir = path.resolve(projectRoot, "src/projects");
 const partnersDir = path.resolve(projectRoot, "src/partners");
 const relatedProjectsDir = path.resolve(projectRoot, "src/related-projects");
-const pageDir = path.resolve(projectRoot, "src");
 const api = "https://lifewatch.si/wp-json/wp/v2";
 const externalAssetAliases = new Map([
   [
@@ -44,20 +44,12 @@ const coreAssets = [
   "logo-ul-1.jpg",
   "download.png",
   "19_Univerza-NG-600x600-1.jpg",
-  "famnit_logo_big.png"
+  "famnit_logo_big.png",
+  "LW-slovenia_screen3_SL.pdf",
+  "LW-slovenia_ENG_screen3.pdf"
 ];
 
-const pageIds = {};
-
 const curatedPages = ["about", "consortium", "projects", "contacts", "biodiversity-observatory-automation-wg"];
-
-async function fetchJson(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed ${response.status} ${url}`);
-  }
-  return response.json();
-}
 
 async function fetchAll(endpoint) {
   const items = [];
@@ -211,7 +203,6 @@ async function migrateCollection(type, outputDir, urlBase, { preserveExisting = 
 async function migratePosts(mediaById) {
   const posts = await fetchAll(`${api}/posts?per_page=100&_fields=id,date,slug,title,excerpt,content,featured_media`);
   await fs.mkdir(postDir, { recursive: true });
-  await fs.mkdir(legacyPostDir, { recursive: true });
 
   let reviewedSummaries = [];
   try {
@@ -257,64 +248,17 @@ async function migratePosts(mediaById) {
       image
     })}${body}\n`;
     await fs.writeFile(path.join(postDir, `${post.slug}.njk`), file);
-
-    const legacyFile = `${frontMatter({
-      layout: "post.njk",
-      title,
-      date: post.date,
-      permalink: `/news/${post.slug}/`,
-      image
-    })}${body}\n`;
-    await fs.writeFile(path.join(legacyPostDir, `${post.slug}.njk`), legacyFile);
   }
 
   await fs.writeFile(postsDataPath, `${JSON.stringify(summaries, null, 2)}\n`);
 }
 
-async function migratePages() {
-  console.log(`Skipping curated Elementor layout pages: ${curatedPages.join(", ")}`);
-
-  for (const [slug, id] of Object.entries(pageIds)) {
-    const page = await fetchJson(`${api}/pages/${id}?_fields=id,slug,title,content`);
-    const title = decode(page.title.rendered);
-    let body = localizeUrls(stripElementor(page.content.rendered));
-    await copyReferencedUploads(page.content.rendered);
-
-    if (!body || body.length < 80) {
-      body = `<p>${title} content should be reviewed against the original WordPress page. The static route is in place for navigation continuity.</p>`;
-    }
-
-    const file = `${frontMatter({
-      layout: "page.njk",
-      title,
-      permalink: `/${slug}/`
-    })}${body}\n`;
-    await fs.writeFile(path.join(pageDir, `${slug}.njk`), file);
-  }
-
-  await writeProjectPages();
-}
-
-async function writeProjectPages() {
-  const projectsRoot = path.join(pageDir, "projects");
-  await fs.mkdir(projectsRoot, { recursive: true });
-  const projects = [
-    ["ri-si-lifewatch", "RI-SI-LifeWatch", "RI-SI-LifeWatch strengthened Slovenian participation in the LifeWatch ERIC infrastructure and supported national biodiversity and ecosystem research services."],
-    ["envri-fair", "ENVRI-FAIR", "ENVRI-FAIR connected environmental research infrastructures through FAIR data services and shared standards."],
-    ["open-earth-monitor", "Open-Earth-Monitor", "Open-Earth-Monitor supports open-source environmental cyberinfrastructure and monitoring workflows."]
-  ];
-
-  for (const [slug, title, text] of projects) {
-    const file = `${frontMatter({
-      layout: "page.njk",
-      title: `${title} moved`,
-      permalink: `/projects/${slug}/`
-    })}<p><a href="/related-projects/${slug}/">${title}</a></p><p>${text}</p>\n`;
-    await fs.writeFile(path.join(projectsRoot, `${slug}.njk`), file);
-  }
-}
-
 async function main() {
+  await Promise.all([
+    fs.rm(deprecatedPostAliasDir, { recursive: true, force: true }),
+    fs.rm(deprecatedProjectAliasDir, { recursive: true, force: true })
+  ]);
+
   await fs.mkdir(outputUploads, { recursive: true });
   for (const asset of coreAssets) {
     await copyUpload(asset);
@@ -326,9 +270,9 @@ async function main() {
   await migratePosts(mediaById);
   await migrateCollection("partners", partnersDir, "partners", { preserveExisting: true });
   await migrateCollection("related-projects", relatedProjectsDir, "related-projects", { preserveExisting: true });
-  await migratePages();
+  console.log(`Keeping curated layout pages: ${curatedPages.join(", ")}`);
 
-  console.log("Migration complete: generated posts, pages, and local uploads.");
+  console.log("Migration complete: generated posts, collections, and local uploads.");
 }
 
 main().catch((error) => {

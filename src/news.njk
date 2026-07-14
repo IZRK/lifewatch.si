@@ -20,9 +20,9 @@ permalink: /communications/news/
     </symbol>
   </svg>
   <div class="archive-news-grid">
-    {% for post in posts | limit(6) %}
+    {% for post in posts %}
       <article class="archive-card">
-        <img class="archive-card-image" src="{{ post.image }}" alt="">
+        <img class="archive-card-image" src="{{ post.image }}" alt="{{ post.title }}">
         <div class="archive-card-body">
           <h2><a href="/{{ post.slug }}/">{{ post.title }}</a></h2>
           <p>{{ post.archiveExcerpt }}</p>

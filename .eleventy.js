@@ -24,6 +24,14 @@ export default function (eleventyConfig) {
     return Array.isArray(items) ? items.slice(0, count) : items;
   });
 
+  eleventyConfig.addFilter("absoluteUrl", (value, base) => {
+    try {
+      return new URL(value, base).href;
+    } catch {
+      return value;
+    }
+  });
+
   eleventyConfig.addTransform("relative-local-urls", function (content) {
     if (!this.page.outputPath || !this.page.outputPath.endsWith(".html")) {
       return content;

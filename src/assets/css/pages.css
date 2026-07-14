@@ -246,6 +246,76 @@
   padding: 9px 10px 35.5px;
 }
 
+.communication-materials {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.communication-materials > p {
+  margin: 0 0 32px;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.material-downloads {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.material-download {
+  display: flex;
+  min-height: 132px;
+  padding: 24px;
+  border: 1px solid #d7d7d7;
+  color: var(--ink);
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+.material-download:hover {
+  border-color: var(--green);
+  text-decoration: none;
+}
+
+.material-download strong {
+  color: var(--green);
+  font-family: "Titillium Web", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.material-download span {
+  font-weight: 600;
+}
+
+.not-found {
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.not-found > p:first-child {
+  margin-bottom: 28px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.not-found .button + .button {
+  margin-left: 10px;
+}
+
+.not-found .button-secondary {
+  border: 1px solid var(--green);
+  background: var(--white);
+  color: var(--green);
+}
+
+.not-found .button-secondary:hover {
+  background: #f3f3f3;
+}
+
 .elementor-two-col {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
@@ -2032,6 +2102,19 @@
 }
 
 @media (max-width: 560px) {
+  .material-downloads {
+    grid-template-columns: 1fr;
+  }
+
+  .not-found .button {
+    display: flex;
+    width: 100%;
+  }
+
+  .not-found .button + .button {
+    margin: 10px 0 0;
+  }
+
   .archive-card:nth-child(1) {
     min-height: 535px;
   }
