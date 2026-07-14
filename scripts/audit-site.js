@@ -320,12 +320,12 @@ const auditBrowser = async (browser, origin) => {
           }
         }
 
-        if (route === "/" && (width === 1439 || width === 1440)) {
+        if (route === "/" && (width === 1024 || width === 1025)) {
           const shell = await page.evaluate(() => ({
             header: getComputedStyle(document.querySelector(".site-header")).display,
             sidebar: getComputedStyle(document.querySelector(".sidebar-nav")).display,
           }));
-          const desktop = width === 1440;
+          const desktop = width === 1025;
           if ((shell.header === "none") !== desktop) fail(scope, "header visibility does not match the shell breakpoint");
           if ((shell.sidebar !== "none") !== desktop) fail(scope, "sidebar visibility does not match the shell breakpoint");
         }
@@ -361,6 +361,23 @@ const auditBrowser = async (browser, origin) => {
   }
   if (!await toggle.evaluate((element) => document.activeElement === element)) {
     fail("mobile menu", "focus did not return to the toggle after Escape");
+  }
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(`${origin}/`, { waitUntil: "domcontentloaded" });
+  const sidebarItem = page.locator(".side-menu-item").filter({ has: page.locator(".side-submenu-toggle") }).first();
+  const submenuToggle = sidebarItem.locator(".side-submenu-toggle");
+  const submenu = sidebarItem.locator(".side-submenu");
+  const submenuIsVisible = () => submenu.evaluate((element) => getComputedStyle(element).display !== "none");
+
+  if (await submenuIsVisible()) fail("sidebar submenu", "submenu is visible before interaction");
+  await sidebarItem.locator("a.has-children").hover();
+  if (await submenuIsVisible()) fail("sidebar submenu", "parent-link hover opened the submenu");
+  await submenuToggle.hover();
+  if (await submenuIsVisible()) fail("sidebar submenu", "toggle hover opened the submenu");
+  await submenuToggle.click();
+  if (await submenuToggle.getAttribute("aria-expanded") !== "true" || !await submenuIsVisible()) {
+    fail("sidebar submenu", "click did not open the submenu");
   }
 
   await context.close();
