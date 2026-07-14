@@ -31,8 +31,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build static site
-        run: npm run build
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build and audit static site
+        run: npm run verify
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
