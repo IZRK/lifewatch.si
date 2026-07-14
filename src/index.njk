@@ -9,14 +9,14 @@ title: LifeWatch Slovenia
       <p>{{ home.hero.text }}</p>
     </div>
     <div class="hero-media">
-      <img src="{{ home.hero.image }}" alt="Illustrated map of Slovenia representing its biodiversity">
+      <img src="{{ home.hero.image }}" width="1964" height="1312" loading="eager" decoding="async" fetchpriority="high" alt="Illustrated map of Slovenia representing its biodiversity">
     </div>
   </div>
 </section>
 
 <section class="feature-banner">
   <a href="{{ home.featureBanner.url }}">
-    <img src="{{ home.featureBanner.image }}" alt="">
+    <img src="{{ home.featureBanner.image }}" width="1024" height="512" loading="eager" decoding="async" alt="LifeWatch ERIC BEeS 2026 conference">
   </a>
 </section>
 
@@ -27,7 +27,7 @@ title: LifeWatch Slovenia
   <div class="resource-grid">
     {% for item in home.resources %}
       <a class="resource-card" href="{{ item.url }}">
-        <span class="resource-icon"><img src="{{ item.icon }}" alt=""></span>
+        <span class="resource-icon"><img src="{{ item.icon }}" width="80" height="80" alt=""></span>
         <span class="resource-title">{{ item.title }}</span>
         <strong class="resource-count" data-resource-type="{{ item.metadataType }}">{{ item.count }}</strong>
       </a>
@@ -37,26 +37,25 @@ title: LifeWatch Slovenia
 </section>
 
 <section class="eric-kicker">
-  <h3>We are part of <strong>LifeWatch ERIC</strong>, the e-Science infrastructure</h3>
-  <h3>for research on biodiversity and ecosystems.</h3>
+  <h2>We are part of <strong>LifeWatch ERIC</strong>, the e-Science infrastructure for research on biodiversity and ecosystems.</h2>
 </section>
 
 <section class="split-section">
   <div class="split-inner">
-    <div class="about-image" aria-hidden="true"></div>
+    <div class="about-image"><img src="{{ home.aboutImage }}" width="1024" height="558" alt=""></div>
     <div class="about-copy">
       <h2>LifeWatch ERIC</h2>
       <p>LifeWatch ERIC facilitates the sharing and aggregation of open data and its integration and analysis through advanced modeling tools. Its VREs, together with computing capacity and the most innovative technologies, allow for testing scenarios of change in the organization and conservation of biodiversity, ecosystems and their services in response to different pressures.</p>
       <div class="about-spacer" aria-hidden="true"></div>
       <h2>LifeWatch Slovenia</h2>
-      <p>Slovenian researchers cooperating in this infrastructure are seeking to raise Slovenian science to an internationally comparable level in Environmental<br>sciences.</p>
-      <p>LifeWatch is part of the Slovenian Strategy for Smart Specialization<br>(S4) and Horizon 2020, focusing on the development of technological solu-<br>tions in the field of biodiversity and socio-ecosystem research.</p>
-      <p>Since 2015, the Slovenian Consortium, LifeWatch-SI, has been promoting<br>the importance of integrating and networking information &amp; data in order to:</p>
+      <p>Slovenian researchers cooperating in this infrastructure are seeking to raise Slovenian science to an internationally comparable level in environmental sciences.</p>
+      <p>LifeWatch is part of the Slovenian Strategy for Smart Specialization (S4) and Horizon 2020, focusing on the development of technological solutions in the field of biodiversity and socio-ecosystem research.</p>
+      <p>Since 2015, the Slovenian Consortium, LifeWatch-SI, has been promoting the importance of integrating and networking information &amp; data in order to:</p>
       <ul>
-        <li>coordinate biodiversity research in marine, freshwater and terrestrial eco-<br>systems;</li>
-        <li>plan common access to a vast array of data from various databases and<br>observatories;</li>
-        <li>predict computing capabilities with analytical and modelling tools in virtual<br>laboratories;</li>
-        <li>support training and educational programs that will enable a proper under-<br>standing of biodiversity</li>
+        <li>coordinate biodiversity research in marine, freshwater and terrestrial ecosystems;</li>
+        <li>plan common access to a vast array of data from various databases and observatories;</li>
+        <li>predict computing capabilities with analytical and modelling tools in virtual laboratories;</li>
+        <li>support training and educational programs that will enable a proper understanding of biodiversity</li>
       </ul>
     </div>
   </div>
@@ -69,8 +68,10 @@ title: LifeWatch Slovenia
   <div class="project-grid">
     {% for project in home.projects %}
       <article class="project-card">
-        <a class="project-image" href="{{ project.url }}"><img src="{{ project.image }}" alt=""></a>
-        <h3><a href="{{ project.url }}">{{ project.title }}</a></h3>
+        <a class="project-card-link" href="{{ project.url }}">
+          <span class="project-image"><img src="{{ project.image }}" alt=""></span>
+          <h3>{{ project.title }}</h3>
+        </a>
       </article>
     {% endfor %}
   </div>
@@ -86,7 +87,7 @@ title: LifeWatch Slovenia
         {% if post.image %}<img src="{{ post.image }}" alt="">{% endif %}
         <div>
           <h3><a href="/{{ post.slug }}/">{{ post.title | safe }}</a></h3>
-          <p class="post-meta"><time datetime="{{ post.date }}">{{ post.date | wordpressDate }}</time><span>No Comments</span></p>
+          <p class="post-meta"><time datetime="{{ post.date }}">{{ post.date | wordpressDate }}</time></p>
           <p>{{ post.excerpt | safe }}</p>
           <a class="read-more" href="/{{ post.slug }}/">Read More &raquo;</a>
         </div>

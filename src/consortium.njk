@@ -10,7 +10,7 @@ permalink: "/consortium/"
     {% for partner in home.partners %}
       <a class="partner-card" href="{{ partner.url }}">
         <img src="{{ partner.image }}" alt="">
-        <h3>{{ partner.title }}</h3>
+        <h3 aria-level="2">{{ partner.title }}</h3>
       </a>
     {% endfor %}
   </div>

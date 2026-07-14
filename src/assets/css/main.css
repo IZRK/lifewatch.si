@@ -1,8 +1,9 @@
 :root {
-  --green: #009138;
+  --green: #007f32;
   --green-dark: #00752f;
   --ink: #000;
-  --muted: #7a7a7a;
+  --muted: #666;
+  --focus: #0b5fa5;
   --soft: #f3f3f3;
   --white: #fff;
   --content-max: 1140px;
@@ -36,6 +37,7 @@ img,
 svg {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 a {
@@ -45,6 +47,12 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--white);
 }
 
 .visually-hidden {
@@ -106,8 +114,8 @@ a:hover {
 .menu-toggle {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   margin-left: auto;
   padding: 8px;
   border: 0;
@@ -155,10 +163,12 @@ a:hover {
 
 .site-nav-item > a,
 .site-submenu a {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   padding: 7px 4px;
   color: #111;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -272,6 +282,7 @@ a:hover {
 
 .resource-grid {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   max-width: 750px;
   margin: 0 auto;
 }
@@ -331,7 +342,7 @@ a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 39px;
+  min-height: 44px;
   padding: 12px 24px;
   border-radius: 3px;
   background: var(--green);
@@ -358,10 +369,10 @@ a:hover {
   text-align: center;
 }
 
-.eric-kicker h3 {
+.eric-kicker h2 {
   margin: 0;
   color: var(--green);
-  font-size: clamp(23px, 4.4vw, 32px);
+  font-size: 24px;
   font-weight: 400;
   line-height: 1.35;
 }
@@ -379,9 +390,17 @@ a:hover {
 }
 
 .about-image {
+  overflow: hidden;
   min-height: 300px;
   border-top: 5px solid var(--green);
-  background: url("../uploads/world-scaled-1-1024x558.jpg") center left / cover no-repeat;
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  object-fit: cover;
+  object-position: center left;
 }
 
 .about-copy {
@@ -392,8 +411,8 @@ a:hover {
   background: var(--soft);
   color: var(--ink);
   font-family: "Titillium Web", sans-serif;
-  font-size: 12px;
-  line-height: 13.8px;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 .about-copy h2 {
@@ -406,7 +425,6 @@ a:hover {
 
 .about-copy p {
   margin: 0 0 16px;
-  text-align: justify;
 }
 
 .about-copy ul {
@@ -446,6 +464,11 @@ a:hover {
   margin: 10px 10px 0;
 }
 
+.project-card-link {
+  display: block;
+  color: var(--green);
+}
+
 .project-image img {
   width: 100%;
   height: auto;
@@ -458,7 +481,7 @@ a:hover {
   line-height: 19px;
 }
 
-.project-card h3 a:hover {
+.project-card-link:hover {
   text-decoration: none;
 }
 
@@ -510,10 +533,10 @@ a:hover {
   flex-wrap: wrap;
   gap: 0;
   margin: 0 0 13px;
-  color: #adadad;
+  color: var(--muted);
   font-family: "Roboto Slab", serif;
-  font-size: 12px;
-  line-height: 15.6px;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .post-meta time {
@@ -521,11 +544,6 @@ a:hover {
   margin: 0;
   color: inherit;
   font-size: inherit;
-}
-
-.post-meta span::before {
-  content: "///";
-  margin-inline: 4px;
 }
 
 .news-card div > p:not(.post-meta) {
@@ -541,9 +559,12 @@ a:hover {
 }
 
 .read-more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--green);
   font-family: "Titillium Web", sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 13.8px;
 }
@@ -636,8 +657,9 @@ a:hover {
 }
 
 .site-footer a {
-  display: block;
-  min-height: 26px;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--white);
   font-family: "Titillium Web", sans-serif;
   font-size: 16px;
@@ -690,14 +712,14 @@ a:hover {
   }
 
   .hero-copy p {
-    font-size: clamp(11px, 0.714cqw, 14px);
-    line-height: clamp(14px, 0.918cqw, 18px);
+    font-size: 12px;
+    line-height: 16px;
   }
 
   .hero-copy .eyebrow {
     margin-bottom: clamp(5px, 0.663cqw, 13px);
-    font-size: clamp(15px, 2.041cqw, 40px);
-    line-height: clamp(18px, 2.551cqw, 50px);
+    font-size: 24px;
+    line-height: 30px;
   }
 
   .hero-media {
@@ -711,6 +733,10 @@ a:hover {
 
   .eric-kicker {
     padding-bottom: 18px;
+  }
+
+  .eric-kicker h2 {
+    font-size: 28px;
   }
 
   .news-preview .section-heading {
@@ -747,6 +773,10 @@ a:hover {
 }
 
 @media (min-width: 768px) {
+  .eric-kicker h2 {
+    font-size: 30px;
+  }
+
   .split-inner {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
@@ -780,6 +810,10 @@ a:hover {
 }
 
 @media (min-width: 1440px) {
+  .eric-kicker h2 {
+    font-size: 32px;
+  }
+
   .sidebar-nav {
     position: fixed;
     inset: 0 auto 0 0;
@@ -806,7 +840,9 @@ a:hover {
   .side-menu a,
   .side-submenu a {
     position: relative;
-    display: block;
+    display: flex;
+    align-items: center;
+    min-height: 24px;
     padding: 4px 0;
     color: var(--ink);
     font-family: Arial, sans-serif;
@@ -870,6 +906,8 @@ a:hover {
 
   .about-copy {
     padding-right: 0;
+    font-size: 12px;
+    line-height: 13.8px;
   }
 
   .news-preview {
@@ -882,6 +920,15 @@ a:hover {
 
   .news-card h3 {
     max-width: 280px;
+  }
+
+  .post-meta {
+    font-size: 12px;
+    line-height: 15.6px;
+  }
+
+  .read-more {
+    font-size: 12px;
   }
 
   .consortium {

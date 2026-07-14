@@ -61,7 +61,7 @@ export default function (eleventyConfig) {
       return `${relative}${suffix}`;
     };
 
-    return content
+    const withRelativeUrls = content
       .replace(/\b(href|src)="(\/[^"]*)"/g, (_full, attr, url) => `${attr}="${toRelative(url)}"`)
       .replace(/\bsrcset="([^"]*)"/g, (_full, value) => {
         const rewritten = value
@@ -74,6 +74,31 @@ export default function (eleventyConfig) {
           .join(", ");
         return `srcset="${rewritten}"`;
       });
+
+    const mainStart = withRelativeUrls.search(/<main\b/i);
+    const mainEnd = withRelativeUrls.search(/<\/main>/i);
+    let mainImageSeen = false;
+
+    return withRelativeUrls.replace(/<img\b([^>]*)>/gi, (_full, attributes, offset) => {
+      const selfClosing = /\/\s*$/.test(attributes);
+      let optimized = attributes.replace(/\/\s*$/, "");
+      const inMain = mainStart !== -1 && offset > mainStart && (mainEnd === -1 || offset < mainEnd);
+      const leadContentImage = inMain && !mainImageSeen;
+
+      if (inMain) mainImageSeen = true;
+
+      if (!/\bloading\s*=/i.test(optimized)) {
+        optimized += leadContentImage ? ' loading="eager"' : ' loading="lazy"';
+      }
+      if (!/\bdecoding\s*=/i.test(optimized)) {
+        optimized += ' decoding="async"';
+      }
+      if (leadContentImage && /\bloading\s*=\s*["']eager["']/i.test(optimized) && !/\bfetchpriority\s*=/i.test(optimized)) {
+        optimized += ' fetchpriority="high"';
+      }
+
+      return `<img${optimized}${selfClosing ? " /" : ""}>`;
+    });
   });
 
   return {

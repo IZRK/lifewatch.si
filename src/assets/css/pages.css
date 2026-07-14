@@ -19,9 +19,7 @@
   min-height: 192px;
   padding: 24px 20px;
   color: var(--white);
-  background-color: #00983d;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
-  background-size: 15px 15px;
+  background-color: var(--green);
   text-align: center;
 }
 
@@ -105,10 +103,10 @@
 .archive-card p {
   flex: 1;
   margin: 0 0 20px;
-  color: #7a7a7a;
+  color: var(--muted);
   font-family: "Titillium Web", Arial, sans-serif;
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 21px;
 }
 
 .archive-card-actions {
@@ -125,8 +123,8 @@
 .share-links a {
   display: grid;
   place-items: center;
-  width: 31px;
-  height: 31px;
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
   background: var(--green);
 }
@@ -138,7 +136,7 @@
 }
 
 .archive-card .button {
-  min-height: 40px;
+  min-height: 44px;
   padding: 12px 10px;
 }
 
@@ -176,7 +174,7 @@
 .consortium-intro {
   max-width: none;
   margin: 0 10px 10px;
-  color: #7a7a7a;
+  color: var(--muted);
   font-size: 16px;
   line-height: 18.4px;
   text-align: left;
@@ -236,6 +234,12 @@
   max-width: 850px;
   margin: 0 auto;
   overflow-wrap: anywhere;
+}
+
+.prose a:not(.button) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
 
 .page-content {
@@ -350,7 +354,7 @@
 
 .contacts-content {
   padding: 56px 31px 78.25px 10px;
-  color: #7a7a7a;
+  color: var(--muted);
   background: var(--white);
 }
 
@@ -384,7 +388,7 @@
 
 .contacts-content p {
   margin: 0 0 16px;
-  color: #7a7a7a;
+  color: var(--muted);
   font-family: Roboto, Arial, sans-serif;
   font-size: 16px;
   line-height: 18.4px;
@@ -500,6 +504,9 @@
 .elementor-project-grid article > a {
   display: block;
   background: var(--white);
+  color: var(--green);
+  padding-bottom: 20px;
+  text-decoration: none;
 }
 
 .page-content .elementor-project-grid img {
@@ -516,10 +523,6 @@
   font-family: "Titillium Web", Arial, sans-serif;
   font-size: 19px;
   font-weight: 600;
-  line-height: 19px;
-}
-
-.elementor-project-grid h2 a {
   line-height: 19px;
 }
 
@@ -593,7 +596,7 @@
 
 .wg-content .wg-hero .button {
   display: inline-block;
-  min-height: 0;
+  min-height: 44px;
   box-sizing: border-box;
   width: 138.6px;
   margin-top: 0;
@@ -612,7 +615,7 @@
   margin: 0 -20px;
   padding: 0 10px;
   background: var(--white);
-  color: #7a7a7a;
+  color: var(--muted);
   font-family: Roboto, Arial, sans-serif;
   font-size: 16px;
   line-height: 18.4px;
@@ -628,7 +631,7 @@
 }
 
 .wg-content .wg-intro p:first-child {
-  letter-spacing: 0.12px;
+  letter-spacing: 0;
 }
 
 .wg-content .wg-intro img {
@@ -654,7 +657,7 @@
   width: 1120px;
   max-width: 100%;
   margin: 0 auto 26px;
-  color: #7a7a7a;
+  color: var(--muted);
   font-family: Roboto, Arial, sans-serif;
   font-size: 16px;
   line-height: 18.4px;
@@ -682,7 +685,7 @@
 .detail-content {
   position: relative;
   max-width: var(--content-max);
-  color: #7a7a7a;
+  color: var(--muted);
   font-family: Roboto, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.15;
@@ -1550,7 +1553,7 @@
   display: inline-block;
   box-sizing: border-box;
   width: 208.3px;
-  min-height: 39px;
+  min-height: 44px;
   margin: 20px 0 0 570px;
   padding: 12px 24px;
   border-radius: 3px;
@@ -1579,7 +1582,7 @@
 .post-page-content {
   padding-top: 20px;
   padding-bottom: 40px;
-  color: #7a7a7a;
+  color: var(--muted);
   font-family: Roboto, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.15;
@@ -1656,7 +1659,7 @@
   align-items: center;
   justify-content: center;
   min-width: 172px;
-  min-height: 39px;
+  min-height: 44px;
   margin-top: 39px;
   padding: 12px 24px;
   background: var(--green);
@@ -1693,6 +1696,11 @@
 }
 
 @media (max-width: 1439px) {
+
+  .about-content .about-cards p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
 
   .wg-content {
     padding: 40px 20px 0;
@@ -2034,6 +2042,11 @@
 }
 
 @media (min-width: 1440px) {
+  .archive-card p {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
   .archive-card:nth-child(-n + 3) {
     min-height: 535px;
   }
@@ -2111,6 +2124,16 @@
 }
 
 @media (max-width: 560px) {
+  .page-titlebar h1 {
+    font-size: 32px;
+    line-height: 1.1;
+  }
+
+  .page-titlebar p,
+  .page-titlebar a {
+    font-size: 14px;
+  }
+
   .material-downloads {
     grid-template-columns: 1fr;
   }
@@ -2122,27 +2145,6 @@
 
   .not-found .button + .button {
     margin: 10px 0 0;
-  }
-
-  .archive-card:nth-child(1) {
-    min-height: 535px;
-  }
-
-  .archive-card:nth-child(2) {
-    min-height: 534px;
-  }
-
-  .archive-card:nth-child(3) {
-    min-height: 514px;
-  }
-
-  .archive-card:nth-child(4),
-  .archive-card:nth-child(5) {
-    min-height: 495px;
-  }
-
-  .archive-card:nth-child(6) {
-    min-height: 475px;
   }
 
   .consortium-page .partner-grid {
