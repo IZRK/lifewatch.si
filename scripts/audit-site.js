@@ -14,11 +14,13 @@ const projectRoot = fileURLToPath(new URL("..", import.meta.url));
 const siteRoot = path.join(projectRoot, "_site");
 const site = JSON.parse(fs.readFileSync(path.join(projectRoot, "src/_data/site.json"), "utf8"));
 const metadataEndpoint = "https://metadata.izrk.zrc-sazu.si/srv/api/search/records/_search";
+const representativesRoute = "/representatives-of-the-slovenian-lifewatch-consortium-at-the-lifewatch-eric-bees-conference-in-heraklion/";
 const viewportWidths = [320, 390, 560, 561, 599, 600, 767, 768, 1024, 1025, 1280, 1439, 1440];
 const axeWidths = new Set([390, 1440]);
 const failures = [];
 
 const fail = (scope, detail) => failures.push(`${scope}: ${detail}`);
+const withinPixels = (actual, expected, tolerance = 0.5) => Math.abs(actual - expected) <= tolerance;
 
 const walk = (directory) => fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
   const file = path.join(directory, entry.name);
@@ -330,6 +332,287 @@ const auditBrowser = async (browser, origin) => {
           if ((shell.sidebar !== "none") !== desktop) fail(scope, "sidebar visibility does not match the shell breakpoint");
         }
 
+        if (width === 390) {
+          const mobileTitle = page.locator(".page-titlebar h1").first();
+          if (await mobileTitle.count()) {
+            const titleType = await mobileTitle.evaluate((title) => ({
+              fontSize: getComputedStyle(title).fontSize,
+              lineHeight: getComputedStyle(title).lineHeight,
+            }));
+            if (titleType.fontSize !== "41px" || titleType.lineHeight !== "41px") {
+              fail(scope, `mobile page title is ${titleType.fontSize}/${titleType.lineHeight}, expected 41px/41px`);
+            }
+          }
+        }
+
+        if (route === "/biodiversity-observatory-automation-wg/" && width === 1024) {
+          const wg = await page.evaluate(() => {
+            const button = document.querySelector(".wg-hero .button");
+            const intro = document.querySelector(".wg-intro");
+            const buttonRect = button?.getBoundingClientRect();
+            const introChildren = [...(intro?.children || [])].map((child) => {
+              const rect = child.getBoundingClientRect();
+              return { left: rect.left, top: rect.top, right: rect.right, width: rect.width };
+            });
+            return {
+              button: buttonRect ? { width: buttonRect.width, height: buttonRect.height } : null,
+              introDisplay: intro ? getComputedStyle(intro).display : null,
+              introColumns: intro ? getComputedStyle(intro).gridTemplateColumns : null,
+              introChildren,
+            };
+          });
+
+          if (!wg.button) {
+            fail(scope, "WG join button is missing");
+          } else if (!withinPixels(wg.button.width, 138.64, 0.2) || !withinPixels(wg.button.height, 39, 0.1)) {
+            fail(scope, `WG join button is ${wg.button.width.toFixed(2)}x${wg.button.height.toFixed(2)}, expected 138.64x39`);
+          }
+          if (
+            wg.introDisplay !== "grid"
+            || (wg.introColumns || "").split(/\s+/).filter(Boolean).length !== 2
+            || wg.introChildren.length !== 2
+            || !withinPixels(wg.introChildren[0].top, wg.introChildren[1].top, 0.1)
+            || wg.introChildren[1].left < wg.introChildren[0].right
+          ) {
+            fail(scope, "WG intro is not a two-column grid at 1024px");
+          }
+        }
+
+        if (width === 390 || width === 1440) {
+          const postDetail = await page.evaluate(() => {
+            const grid = document.querySelector(".post-detail-columns");
+            if (!grid) return null;
+            return {
+              display: getComputedStyle(grid).display,
+              columns: getComputedStyle(grid).gridTemplateColumns.split(/\s+/).filter(Boolean).length,
+              children: [...grid.children].map((child) => {
+                const rect = child.getBoundingClientRect();
+                return {
+                  left: rect.left,
+                  top: rect.top,
+                  right: rect.right,
+                  bottom: rect.bottom,
+                  width: rect.width,
+                };
+              }),
+            };
+          });
+
+          if (postDetail) {
+            if (postDetail.display !== "grid" || postDetail.children.length !== 2) {
+              fail(scope, "news detail is missing its two-part grid");
+            } else if (width === 1440) {
+              const [first, second] = postDetail.children;
+              if (
+                postDetail.columns !== 2
+                || !withinPixels(first.top, second.top, 0.1)
+                || second.left < first.right
+              ) {
+                fail(scope, "news detail is not a non-overlapping two-column desktop layout");
+              }
+            } else {
+              const [first, second] = postDetail.children;
+              if (
+                postDetail.columns !== 1
+                || !withinPixels(first.left, second.left, 0.1)
+                || !withinPixels(first.width, second.width, 0.1)
+                || second.top < first.bottom
+              ) {
+                fail(scope, "news detail does not stack without overlap on mobile");
+              }
+            }
+          }
+        }
+
+        if (route === "/partners/nib/" && [390, 768, 1024, 1025, 1440].includes(width)) {
+          const nib = await page.evaluate(() => {
+            const intro = document.querySelector('.detail-content > img[src$="/logo.png"] + p');
+            const research = intro?.nextElementSibling;
+            const publications = document.querySelector(".nib-publications");
+            const introRect = intro?.getBoundingClientRect();
+            const researchRect = research?.getBoundingClientRect();
+            return {
+              introBottom: introRect?.bottom,
+              researchTop: researchRect?.top,
+              publicationDisplay: publications ? getComputedStyle(publications).display : null,
+              publicationColumns: publications
+                ? getComputedStyle(publications).gridTemplateColumns.split(/\s+/).filter(Boolean).length
+                : 0,
+            };
+          });
+          const expectedColumns = width >= 768 ? 2 : 1;
+          if (
+            nib.introBottom === undefined
+            || nib.researchTop === undefined
+            || nib.researchTop < nib.introBottom
+          ) {
+            fail(scope, "NIB introduction overlaps the Research section");
+          }
+          if (nib.publicationDisplay !== "grid" || nib.publicationColumns !== expectedColumns) {
+            fail(scope, `NIB publications use ${nib.publicationColumns} columns, expected ${expectedColumns}`);
+          }
+        }
+
+        if (route === representativesRoute && (width === 390 || width === 1440)) {
+          const representatives = await page.evaluate(() => {
+            const grid = document.querySelector(".post-detail-columns--representatives");
+            if (!grid) return null;
+            const columns = [...grid.children].map((column) => {
+              const rect = column.getBoundingClientRect();
+              const media = [...column.querySelectorAll(".post-detail-media img")].map((image) => {
+                const mediaRect = image.getBoundingClientRect();
+                return { width: mediaRect.width, left: mediaRect.left, right: mediaRect.right };
+              });
+              return {
+                left: rect.left,
+                top: rect.top,
+                right: rect.right,
+                bottom: rect.bottom,
+                width: rect.width,
+                media,
+              };
+            });
+            return {
+              display: getComputedStyle(grid).display,
+              gridTemplateColumns: getComputedStyle(grid).gridTemplateColumns,
+              columns,
+            };
+          });
+
+          if (!representatives || representatives.columns.length !== 2) {
+            fail(scope, "representatives detail is missing its two content columns");
+          } else if (width === 1440) {
+            const [first, second] = representatives.columns;
+            if (
+              representatives.display !== "grid"
+              || representatives.gridTemplateColumns.split(/\s+/).filter(Boolean).length !== 2
+              || !withinPixels(first.top, second.top, 0.1)
+              || second.left < first.right
+              || !withinPixels(first.width, second.width, 0.1)
+            ) {
+              fail(scope, "representatives detail is not a two-column desktop layout");
+            }
+          } else {
+            const [first, second] = representatives.columns;
+            const mediaIsFullWidth = representatives.columns.every((column) => (
+              column.media.length > 0
+              && column.media.every((media) => withinPixels(media.width, column.width, 1))
+            ));
+            if (
+              representatives.display !== "grid"
+              || representatives.gridTemplateColumns.split(/\s+/).filter(Boolean).length !== 1
+              || !withinPixels(first.left, second.left, 0.1)
+              || !withinPixels(first.width, second.width, 0.1)
+              || second.top < first.bottom
+              || !mediaIsFullWidth
+            ) {
+              fail(scope, "representatives detail does not stack with full-width media on mobile");
+            }
+          }
+        }
+
+        if (route === "/consortium/" && (width === 390 || width === 1440)) {
+          const consortium = await page.evaluate(() => {
+            const grid = document.querySelector(".consortium-page .partner-grid");
+            const footer = document.querySelector(".site-footer");
+            const cards = [...document.querySelectorAll(".consortium-page .partner-card")];
+            const gridRect = grid?.getBoundingClientRect();
+            const footerRect = footer?.getBoundingClientRect();
+            return {
+              grid: gridRect ? {
+                left: gridRect.left,
+                top: gridRect.top,
+                width: gridRect.width,
+                height: gridRect.height,
+              } : null,
+              footerTop: footerRect?.top,
+              cards: cards.map((card) => card.getBoundingClientRect().height),
+            };
+          });
+
+          if (!consortium.grid || consortium.cards.length !== 10) {
+            fail(scope, "Consortium partner grid is incomplete");
+          } else if (width === 390) {
+            if (
+              !withinPixels(consortium.grid.left, 10, 0.1)
+              || !withinPixels(consortium.grid.top, 588.02, 0.1)
+              || !withinPixels(consortium.grid.width, 370, 0.1)
+              || !withinPixels(consortium.grid.height, 2819.06, 0.1)
+              || consortium.cards.some((height) => !withinPixels(height, 250.41, 0.1))
+              || !withinPixels(consortium.footerTop, 3471.67, 0.1)
+            ) {
+              fail(scope, "mobile Consortium cards or footer do not match the live geometry");
+            }
+          } else if (
+            !withinPixels(consortium.grid.left, 310, 0.1)
+            || !withinPixels(consortium.grid.top, 513.13, 0.1)
+            || !withinPixels(consortium.grid.width, 1120, 0.1)
+            || !withinPixels(consortium.grid.height, 491.03, 0.1)
+            || consortium.cards.slice(0, 5).some((height) => !withinPixels(height, 238.22, 0.1))
+            || consortium.cards.slice(5).some((height) => !withinPixels(height, 217.81, 0.1))
+            || !withinPixels(consortium.footerTop, 1064.45, 0.1)
+          ) {
+            fail(scope, "desktop Consortium rows or footer do not match the live geometry");
+          }
+        }
+
+        if (route === "/" && width === 1440) {
+          const footer = await page.evaluate(() => {
+            const element = document.querySelector(".site-footer");
+            const logo = document.querySelector(".footer-logo");
+            const social = document.querySelector(".footer-social-link");
+            const rect = element?.getBoundingClientRect();
+            const logoRect = logo?.getBoundingClientRect();
+            const socialRect = social?.getBoundingClientRect();
+            return {
+              rect: rect ? { left: rect.left, width: rect.width, height: rect.height } : null,
+              columns: [...(element?.children || [])].map((column) => column.getBoundingClientRect().width),
+              logo: logoRect ? { width: logoRect.width, height: logoRect.height } : null,
+              links: [...document.querySelectorAll(".footer-links a")].map((link) => ({
+                height: link.getBoundingClientRect().height,
+                fontSize: getComputedStyle(link).fontSize,
+                lineHeight: getComputedStyle(link).lineHeight,
+              })),
+              social: socialRect ? { width: socialRect.width, height: socialRect.height } : null,
+            };
+          });
+
+          if (
+            !footer.rect
+            || !withinPixels(footer.rect.left, 300, 0.1)
+            || !withinPixels(footer.rect.width, 1140, 0.1)
+            || !withinPixels(footer.rect.height, 300, 0.1)
+            || footer.columns.length !== 4
+            || footer.columns.some((columnWidth) => !withinPixels(columnWidth, 280, 0.1))
+          ) {
+            fail(scope, "desktop footer is not 1140x300 with four 280px columns after the sidebar");
+          }
+          if (
+            !footer.logo
+            || !withinPixels(footer.logo.width, 168, 0.1)
+            || !withinPixels(footer.logo.height, 79.81, 0.2)
+          ) {
+            fail(scope, "desktop footer logo is not 168x79.81");
+          }
+          if (
+            footer.links.length !== 3
+            || footer.links.some((link) => (
+              !withinPixels(link.height, 26, 0.1)
+              || link.fontSize !== "17px"
+              || link.lineHeight !== "20px"
+            ))
+          ) {
+            fail(scope, "desktop footer links do not use 26px rows with 17px/20px type");
+          }
+          if (
+            !footer.social
+            || !withinPixels(footer.social.width, 50, 0.1)
+            || !withinPixels(footer.social.height, 50, 0.1)
+          ) {
+            fail(scope, "desktop footer social control is not 50x50");
+          }
+        }
+
         for (const issue of new Set(runtimeIssues)) fail(scope, issue);
         viewportChecks += 1;
       } catch (error) {
@@ -354,6 +637,11 @@ const auditBrowser = async (browser, origin) => {
   })) {
     fail("mobile menu", "navigation is not visible after opening");
   }
+  const mobileMenuAxe = await new AxeBuilder({ page }).analyze();
+  axeChecks += 1;
+  for (const violation of mobileMenuAxe.violations) {
+    fail("mobile menu open", `axe ${violation.id} (${violation.nodes.length} nodes)`);
+  }
   await page.keyboard.press("Escape");
   if (await toggle.getAttribute("aria-expanded") !== "false") fail("mobile menu", "Escape did not close the navigation");
   if (await page.locator("#site-nav").evaluate((navigation) => getComputedStyle(navigation).display !== "none")) {
@@ -363,21 +651,126 @@ const auditBrowser = async (browser, origin) => {
     fail("mobile menu", "focus did not return to the toggle after Escape");
   }
 
-  await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto(`${origin}/`, { waitUntil: "domcontentloaded" });
-  const sidebarItem = page.locator(".side-menu-item").filter({ has: page.locator(".side-submenu-toggle") }).first();
-  const submenuToggle = sidebarItem.locator(".side-submenu-toggle");
-  const submenu = sidebarItem.locator(".side-submenu");
-  const submenuIsVisible = () => submenu.evaluate((element) => getComputedStyle(element).display !== "none");
+  const sidebarItems = () => page.locator(".side-menu-item").filter({ has: page.locator(".side-submenu-toggle") });
+  const sidebarItem = (label) => page.locator(".side-menu-item").filter({
+    has: page.getByRole("link", { name: label, exact: true }),
+  });
+  const sidebarState = (item) => item.evaluate((element) => {
+    const button = element.querySelector(".side-submenu-toggle");
+    const submenu = element.querySelector(".side-submenu");
+    return {
+      expanded: button?.getAttribute("aria-expanded"),
+      openClass: element.classList.contains("is-open"),
+      visible: submenu ? getComputedStyle(submenu).display !== "none" : false,
+      icon: button?.querySelector(".side-submenu-toggle-icon")?.textContent?.trim(),
+      controls: button?.getAttribute("aria-controls"),
+      submenuId: submenu?.id,
+    };
+  });
+  const assertSidebarState = async (scope, item, open) => {
+    const state = await sidebarState(item);
+    const expectedExpanded = String(open);
+    const expectedIcon = open ? "-" : "+";
+    if (
+      state.expanded !== expectedExpanded
+      || state.openClass !== open
+      || state.visible !== open
+      || state.icon !== expectedIcon
+      || !state.controls
+      || state.controls !== state.submenuId
+    ) {
+      fail(scope, `submenu state is inconsistent: ${JSON.stringify(state)}`);
+    }
+  };
+  const auditClosedSidebarItems = async (scope) => {
+    const items = sidebarItems();
+    const count = await items.count();
+    if (!count) fail(scope, "no desktop submenu controls were found");
 
-  if (await submenuIsVisible()) fail("sidebar submenu", "submenu is visible before interaction");
-  await sidebarItem.locator("a.has-children").hover();
-  if (await submenuIsVisible()) fail("sidebar submenu", "parent-link hover opened the submenu");
-  await submenuToggle.hover();
-  if (await submenuIsVisible()) fail("sidebar submenu", "toggle hover opened the submenu");
-  await submenuToggle.click();
-  if (await submenuToggle.getAttribute("aria-expanded") !== "true" || !await submenuIsVisible()) {
-    fail("sidebar submenu", "click did not open the submenu");
+    for (let index = 0; index < count; index += 1) {
+      const item = items.nth(index);
+      const parentLink = item.locator("a.has-children");
+      const toggle = item.locator(".side-submenu-toggle");
+      const label = (await parentLink.textContent())?.trim() || `submenu ${index + 1}`;
+
+      await assertSidebarState(`${scope} ${label} initial`, item, false);
+      await parentLink.hover();
+      await assertSidebarState(`${scope} ${label} parent hover`, item, false);
+      await toggle.hover();
+      await assertSidebarState(`${scope} ${label} toggle hover`, item, false);
+    }
+  };
+
+  for (const width of [1025, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(`${origin}/`, { waitUntil: "domcontentloaded" });
+    await auditClosedSidebarItems(`sidebar ${width}px home`);
+
+    const consortiumItem = sidebarItem("Consortium");
+    const consortiumToggle = consortiumItem.locator(".side-submenu-toggle");
+    if (await consortiumItem.count() !== 1) {
+      fail(`sidebar ${width}px home`, "Consortium submenu control is missing");
+    } else {
+      await consortiumToggle.focus();
+      await page.keyboard.press("Enter");
+      await assertSidebarState(`sidebar ${width}px keyboard open`, consortiumItem, true);
+      await consortiumToggle.click();
+      await assertSidebarState(`sidebar ${width}px click close`, consortiumItem, false);
+      await consortiumToggle.click();
+      await assertSidebarState(`sidebar ${width}px click open`, consortiumItem, true);
+      if (width === 1025) {
+        const desktopMenuAxe = await new AxeBuilder({ page }).analyze();
+        axeChecks += 1;
+        for (const violation of desktopMenuAxe.violations) {
+          fail("desktop submenu open", `axe ${violation.id} (${violation.nodes.length} nodes)`);
+        }
+      }
+      await consortiumToggle.click();
+      await assertSidebarState(`sidebar ${width}px second click close`, consortiumItem, false);
+    }
+
+    await page.goto(`${origin}/consortium/`, { waitUntil: "domcontentloaded" });
+    await auditClosedSidebarItems(`sidebar ${width}px active Consortium`);
+
+    await page.goto(`${origin}/partners/izrk/`, { waitUntil: "domcontentloaded" });
+    await auditClosedSidebarItems(`sidebar ${width}px active partner child`);
+
+    await page.goto(`${origin}/`, { waitUntil: "domcontentloaded" });
+    const homeConsortiumItem = sidebarItem("Consortium");
+    const projectsItem = sidebarItem("Projects");
+    await homeConsortiumItem.locator(".side-submenu-toggle").click();
+    await projectsItem.locator(".side-submenu-toggle").click();
+    await assertSidebarState(`sidebar ${width}px independent Consortium`, homeConsortiumItem, true);
+    await assertSidebarState(`sidebar ${width}px independent Projects`, projectsItem, true);
+  }
+
+  await page.setViewportSize({ width: 1025, height: 600 });
+  await page.goto(`${origin}/partners/izrk/`, { waitUntil: "domcontentloaded" });
+  const shortConsortiumItem = sidebarItem("Consortium");
+  await shortConsortiumItem.locator(".side-submenu-toggle").click();
+  const sidebarScroll = await page.locator(".sidebar-nav").evaluate((navigation) => {
+    navigation.scrollTop = navigation.scrollHeight;
+    const contacts = [...navigation.querySelectorAll(".side-menu > .side-menu-item > a")]
+      .find((link) => link.textContent.trim().toUpperCase() === "CONTACTS");
+    const navigationRect = navigation.getBoundingClientRect();
+    const contactsRect = contacts?.getBoundingClientRect();
+    return {
+      overflowY: getComputedStyle(navigation).overflowY,
+      clientHeight: navigation.clientHeight,
+      scrollHeight: navigation.scrollHeight,
+      scrollTop: navigation.scrollTop,
+      contactsBottom: contactsRect?.bottom,
+      navigationBottom: navigationRect.bottom,
+    };
+  });
+  if (
+    !["auto", "scroll"].includes(sidebarScroll.overflowY)
+    || sidebarScroll.scrollHeight <= sidebarScroll.clientHeight
+    || sidebarScroll.scrollTop <= 0
+    || sidebarScroll.contactsBottom === undefined
+    || sidebarScroll.contactsBottom > sidebarScroll.navigationBottom + 0.1
+  ) {
+    fail("sidebar 1025x600", `expanded navigation cannot reach its final link: ${JSON.stringify(sidebarScroll)}`);
   }
 
   await context.close();

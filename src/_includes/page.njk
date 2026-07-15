@@ -1,7 +1,7 @@
 ---
 layout: base.njk
 ---
-<section class="page-titlebar{% if page.url == '/about/' %} is-tall{% endif %}">
+<section class="page-titlebar{% if page.url == '/about/' %} is-tall{% endif %}{% if page.url == '/biodiversity-observatory-automation-wg/' %} wg-titlebar{% endif %}">
   <h1>{{ title }}</h1>
   <p>
     <a href="/">Home</a>
@@ -9,10 +9,12 @@ layout: base.njk
       / <a href="/consortium/">Partners</a>
     {% elif page.url.indexOf("/related-projects/") == 0 %}
       / <a href="/projects/">Related Projects</a>
+    {% elif page.url.indexOf("/communications/") == 0 %}
+      / <a href="/communications/">Communications</a>
     {% endif %}
     / {{ title }}
   </p>
 </section>
-<article class="content-wrap prose page-content{% if page.url.indexOf('/partners/') == 0 or page.url.indexOf('/related-projects/') == 0 %} detail-content{% endif %}{% if page.url.indexOf('/partners/') == 0 %} partner-{{ page.fileSlug }}-content{% endif %}{% if page.url.indexOf('/related-projects/') == 0 %} related-content{% endif %}{% if page.url == '/related-projects/envri-fair/' or page.url == '/related-projects/open-earth-monitor/' %} simple-related-content{% endif %}{% if page.url == '/related-projects/envri-fair/' %} envri-related-content{% endif %}{% if page.url == '/partners/nib/' %} nib-content{% endif %}{% if page.url == '/projects/' %} projects-content{% endif %}{% if page.url == '/contacts/' %} contacts-content{% endif %}{% if page.url == '/consortium/' %} consortium-content{% endif %}{% if page.url == '/about/' %} about-content{% endif %}{% if page.url == '/biodiversity-observatory-automation-wg/' %} wg-content{% endif %}">
+<article class="content-wrap prose page-content{% if page.url.indexOf('/partners/') == 0 or page.url.indexOf('/related-projects/') == 0 %} detail-content{% endif %}{% if page.url.indexOf('/partners/') == 0 %} partner-{{ page.fileSlug }}-content{% endif %}{% if page.url.indexOf('/related-projects/') == 0 %} related-content{% endif %}{% if page.url == '/related-projects/ri-si-lifewatch/' %} ri-si-related-content{% endif %}{% if page.url == '/related-projects/envri-fair/' or page.url == '/related-projects/open-earth-monitor/' %} simple-related-content{% endif %}{% if page.url == '/related-projects/envri-fair/' %} envri-related-content{% endif %}{% if page.url == '/partners/nib/' %} nib-content{% endif %}{% if page.url == '/projects/' %} projects-content{% endif %}{% if page.url == '/contacts/' %} contacts-content{% endif %}{% if page.url == '/consortium/' %} consortium-content{% endif %}{% if page.url == '/about/' %} about-content{% endif %}{% if page.url == '/biodiversity-observatory-automation-wg/' %} wg-content{% endif %}">
   {{ content | safe }}
 </article>

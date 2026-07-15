@@ -637,53 +637,117 @@ a:hover {
 .site-footer {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 18px;
-  min-height: 442px;
-  padding: 40px 20px;
-  background: var(--green);
+  min-height: 0;
+  padding: 20px;
+  background: #008938;
   color: var(--white);
+}
+
+.footer-column {
+  min-width: 0;
+}
+
+.footer-brand-column,
+.footer-nav-column {
+  padding-top: 20px;
+}
+
+.footer-brand {
+  display: flex;
+  justify-content: center;
 }
 
 .footer-logo {
-  width: 213px;
+  display: block;
+  width: 60%;
 }
 
 .site-footer h2 {
-  margin: 0 0 19px;
+  margin: 0;
   color: var(--white);
-  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 18px;
 }
 
-.site-footer a {
+.footer-divider {
+  display: block;
+  width: 60%;
+  height: 1px;
+  margin-top: 11px;
+  background: var(--white);
+}
+
+.footer-links {
+  margin-top: 27px;
+}
+
+.footer-links a {
   display: flex;
   align-items: center;
-  min-height: 44px;
+  min-height: 26px;
+  padding: 3px 0;
   color: var(--white);
-  font-family: "Titillium Web", sans-serif;
-  font-size: 16px;
-  line-height: 26px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  font-style: italic;
+  line-height: 20px;
+  text-decoration: none;
 }
 
-.site-footer > div:nth-child(4) h2 {
-  display: none;
+.footer-social-column {
+  padding: 20px 10px 0;
 }
 
-.site-footer > div:nth-child(4) a {
+.footer-social-link {
   display: grid;
   place-items: center;
-  width: 50px;
-  height: 50px;
-  min-height: 0;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: var(--white);
 }
 
 .social-icon {
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
   fill: var(--green);
+}
+
+@media (min-width: 768px) {
+  .site-footer {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    min-height: 300px;
+    padding: 0 20px 0 0;
+  }
+
+  .footer-brand-column,
+  .footer-nav-column,
+  .footer-social-column {
+    padding: 20% 0 0;
+  }
+
+  .footer-links {
+    margin-top: 7px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .site-footer h2 {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .footer-social-link {
+    width: 50px;
+    height: 50px;
+  }
+
+  .social-icon {
+    width: 25px;
+    height: 25px;
+  }
 }
 
 @media (min-width: 600px) {
@@ -758,13 +822,6 @@ a:hover {
 
   .resource-title {
     min-height: 43.2px;
-  }
-
-  .site-footer {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0;
-    min-height: 300px;
-    padding: 71px 20px 0;
   }
 
   .consortium .section-heading p {
@@ -861,6 +918,8 @@ a:hover {
     display: block;
     width: var(--sidebar-width);
     min-height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
     padding: 10px;
     background: var(--white);
     text-align: center;
@@ -1008,14 +1067,6 @@ a:hover {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  .site-footer {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    padding: 71px 0 0;
-  }
-
-  .footer-logo {
-    margin-left: 71px;
-  }
 }
 
 @media (min-width: 3000px) {
