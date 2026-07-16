@@ -49,9 +49,9 @@ export default function (eleventyConfig) {
       const pathname = match[1];
       const suffix = match[2] || "";
       const hasExtension = path.extname(pathname) !== "";
-      const target = hasExtension
-        ? path.join(outputRoot, pathname)
-        : path.join(outputRoot, pathname, "index.html");
+      if (!hasExtension) return url;
+
+      const target = path.join(outputRoot, pathname);
       let relative = path.relative(currentDir, target).replaceAll(path.sep, "/");
 
       if (!relative.startsWith(".")) {

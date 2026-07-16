@@ -91,7 +91,14 @@ a:hover {
 }
 
 .site-main {
+  display: flex;
   min-width: 0;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-main > main {
+  flex: 1 0 auto;
 }
 
 .site-header {
@@ -641,6 +648,7 @@ a:hover {
   padding: 20px;
   background: #008938;
   color: var(--white);
+  flex: 0 0 auto;
 }
 
 .footer-column {

@@ -163,6 +163,19 @@ const auditLocalReferences = () => {
 
   for (const { route, html } of htmlDocuments) {
     const baseUrl = new URL(route, auditOrigin);
+    for (const match of html.matchAll(/\bhref=["']([^"']*)["']/gi)) {
+      const reference = decode(match[1]);
+      if (reference.startsWith("#") || reference.startsWith("?")) continue;
+
+      try {
+        const resolved = new URL(reference, baseUrl);
+        if (resolved.origin === auditOrigin.origin && resolved.pathname.endsWith(".html")) {
+          fail(route, `local link exposes an .html filename: ${reference}`);
+        }
+      } catch {
+        // Invalid references are reported by assertLocalReference below.
+      }
+    }
     for (const reference of collectHtmlReferences(html)) {
       if (assertLocalReference(reference, baseUrl, route)) referenceCount += 1;
     }
@@ -527,11 +540,14 @@ const auditBrowser = async (browser, origin) => {
               } : null,
               footerTop: footerRect?.top,
               cards: cards.map((card) => card.getBoundingClientRect().height),
+              linkDecorations: cards.map((card) => getComputedStyle(card).textDecorationLine),
             };
           });
 
-          if (!consortium.grid || consortium.cards.length !== 10) {
+          if (!consortium.grid || consortium.cards.length !== 10 || consortium.linkDecorations.length !== 10) {
             fail(scope, "Consortium partner grid is incomplete");
+          } else if (consortium.linkDecorations.some((decoration) => decoration !== "none")) {
+            fail(scope, "Consortium partner links are underlined");
           } else if (width === 390) {
             if (
               !withinPixels(consortium.grid.left, 10, 0.1)
@@ -554,6 +570,56 @@ const auditBrowser = async (browser, origin) => {
           ) {
             fail(scope, "desktop Consortium rows or footer do not match the live geometry");
           }
+
+          const firstPartner = page.locator(".consortium-page .partner-card").first();
+          await firstPartner.hover();
+          if (await firstPartner.evaluate((card) => getComputedStyle(card).textDecorationLine) !== "none") {
+            fail(scope, "Consortium partner link becomes underlined on hover");
+          }
+        }
+
+        if (route === "/communications/news/" && (width === 390 || width === 1440)) {
+          const newsControls = await page.evaluate(() => [...document.querySelectorAll(".archive-card")].map((card) => {
+            const button = card.querySelector(".archive-card-actions .button");
+            const socialLinks = [...card.querySelectorAll(".share-links a")];
+            const buttonRect = button?.getBoundingClientRect();
+            return {
+              button: buttonRect ? {
+                width: buttonRect.width,
+                height: buttonRect.height,
+                scrollHeight: button.scrollHeight,
+                whiteSpace: getComputedStyle(button).whiteSpace,
+              } : null,
+              socials: socialLinks.map((link) => {
+                const rect = link.getBoundingClientRect();
+                return { left: rect.left, right: rect.right, width: rect.width, height: rect.height };
+              }),
+            };
+          }));
+
+          if (!newsControls.length) fail(scope, "news archive cards are missing");
+          for (const [index, controls] of newsControls.entries()) {
+            if (
+              !controls.button
+              || !withinPixels(controls.button.width, 97, 0.1)
+              || !withinPixels(controls.button.height, 40, 0.1)
+              || controls.button.scrollHeight > controls.button.height
+              || controls.button.whiteSpace !== "nowrap"
+            ) {
+              fail(scope, `news card ${index + 1} has a broken Read more button`);
+            }
+            if (
+              controls.socials.length !== 3
+              || controls.socials.some((social) => (
+                !withinPixels(social.width, 32, 0.1) || !withinPixels(social.height, 32, 0.1)
+              ))
+              || controls.socials.slice(1).some((social, socialIndex) => (
+                !withinPixels(social.left - controls.socials[socialIndex].right, 6, 0.1)
+              ))
+            ) {
+              fail(scope, `news card ${index + 1} social buttons are oversized or touching`);
+            }
+          }
         }
 
         if (route === "/" && width === 1440) {
@@ -573,7 +639,12 @@ const auditBrowser = async (browser, origin) => {
                 fontSize: getComputedStyle(link).fontSize,
                 lineHeight: getComputedStyle(link).lineHeight,
               })),
-              social: socialRect ? { width: socialRect.width, height: socialRect.height } : null,
+              social: socialRect ? {
+                width: socialRect.width,
+                height: socialRect.height,
+                href: social.href,
+                label: social.getAttribute("aria-label"),
+              } : null,
             };
           });
 
@@ -608,8 +679,10 @@ const auditBrowser = async (browser, origin) => {
             !footer.social
             || !withinPixels(footer.social.width, 50, 0.1)
             || !withinPixels(footer.social.height, 50, 0.1)
+            || footer.social.href !== "https://bsky.app/profile/lifewatch.si"
+            || footer.social.label !== "LifeWatch Slovenia on Bluesky"
           ) {
-            fail(scope, "desktop footer social control is not 50x50");
+            fail(scope, "desktop footer Bluesky control is incorrect");
           }
         }
 
@@ -771,6 +844,25 @@ const auditBrowser = async (browser, origin) => {
     || sidebarScroll.contactsBottom > sidebarScroll.navigationBottom + 0.1
   ) {
     fail("sidebar 1025x600", `expanded navigation cannot reach its final link: ${JSON.stringify(sidebarScroll)}`);
+  }
+
+  await page.setViewportSize({ width: 3840, height: 2160 });
+  await page.goto(`${origin}/contacts/`, { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => document.fonts.ready.then(() => true));
+  const fourKFooter = await page.evaluate(() => {
+    const footer = document.querySelector(".site-footer")?.getBoundingClientRect();
+    return {
+      footerBottom: footer?.bottom,
+      viewportHeight: window.innerHeight,
+      documentHeight: document.documentElement.scrollHeight,
+    };
+  });
+  if (
+    fourKFooter.footerBottom === undefined
+    || !withinPixels(fourKFooter.footerBottom, fourKFooter.viewportHeight, 0.1)
+    || !withinPixels(fourKFooter.documentHeight, fourKFooter.viewportHeight, 0.1)
+  ) {
+    fail("contacts 3840x2160", `footer does not reach the viewport bottom: ${JSON.stringify(fourKFooter)}`);
   }
 
   await context.close();

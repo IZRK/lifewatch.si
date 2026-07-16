@@ -117,29 +117,30 @@
 
 .share-links {
   display: flex;
-  gap: 0;
+  gap: 6px;
 }
 
 .share-links a {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 999px;
   background: var(--green);
 }
 
 .share-links svg {
-  width: 15px;
-  height: 15px;
+  width: 12px;
+  height: 12px;
   fill: var(--white);
 }
 
 .archive-card .button {
-  width: 96.5px;
+  width: 97px;
   height: 40px;
   min-height: 40px;
   padding: 10px;
+  white-space: nowrap;
 }
 
 .partner-grid {
@@ -250,6 +251,11 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
+}
+
+.prose .consortium-page a.partner-card,
+.prose .consortium-page a.partner-card:hover {
+  text-decoration: none;
 }
 
 .page-content {
