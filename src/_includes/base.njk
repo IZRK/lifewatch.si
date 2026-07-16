@@ -6,7 +6,9 @@
     <title>{{ title or site.title }}</title>
     <meta name="description" content="{{ description or site.description }}">
     <link rel="icon" href="/assets/uploads/favicon.png">
-    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&amp;family=Roboto+Slab:wght@100..900&amp;family=Titillium+Web:wght@400;600;700&amp;display=swap">
     <link rel="stylesheet" href="/assets/css/main.css">
     {% if page.url != '/' %}<link rel="stylesheet" href="/assets/css/pages.css">{% endif %}
   </head>
