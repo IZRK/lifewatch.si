@@ -4,10 +4,6 @@
     "text": "LifeWatch Slovenia is one of the national nodes composing LifeWatch ERIC, European Infrastructure consortium providing e-Science research facilities, data resources, web services and Virtual Research Environments (VRE) to biodiversity and ecosystem research. The Research Infrastructure Roadmap 2021-2030, listed LifeWatch among the projects within the priority areas for the establishment of the NRRI in the field of Sustainable Energy Resources and Environmental Technologies.",
     "image": "/assets/uploads/slovenia.svg"
   },
-  "featureBanner": {
-    "image": "/assets/uploads/bafkreibhbzfqydiqqhjds6jlttnffziotmxs6nmzs5mknsjagcgmvjjnoq-1024x512.jpg",
-    "url": "https://www.lifewatch.eu/bees-2026/"
-  },
   "resources": [
     { "title": "Dataset", "count": 9, "metadataType": "Datasets", "icon": "/assets/uploads/Datasets.svg", "url": "https://metadata.izrk.zrc-sazu.si/srv/eng/catalog.search#/search?isTemplate=n&resourceTemporalDateRange=%7B%22range%22:%7B%22resourceTemporalDateRange%22:%7B%22gte%22:null,%22lte%22:null,%22relation%22:%22intersects%22%7D%7D%7D&sortBy=relevance&query_string=%7B%22cat%22:%7B%22RI-SI-LifeWatch%22:true,%22lifewatch%22:true%7D,%22resourceType%22:%7B%22Datasets%22:true%7D%7D&from=1&to=30&languageStrategy=searchInAllLanguages" },
     { "title": "Research Sites", "count": 47, "metadataType": "Research sites", "icon": "/assets/uploads/researchsite-2.svg", "url": "https://metadata.izrk.zrc-sazu.si/srv/eng/catalog.search#/search?isTemplate=n&resourceTemporalDateRange=%7B%22range%22:%7B%22resourceTemporalDateRange%22:%7B%22gte%22:null,%22lte%22:null,%22relation%22:%22intersects%22%7D%7D%7D&sortBy=relevance&query_string=%7B%22cat%22:%7B%22RI-SI-LifeWatch%22:true,%22lifewatch%22:true%7D,%22resourceType%22:%7B%22Research%20sites%22:true%7D%7D&from=1&to=30&languageStrategy=searchInAllLanguages" },

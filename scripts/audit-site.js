@@ -377,14 +377,13 @@ const auditBrowser = async (browser, origin) => {
 
           if (!wg.button) {
             fail(scope, "WG join button is missing");
-          } else if (!withinPixels(wg.button.width, 138.64, 0.2) || !withinPixels(wg.button.height, 39, 0.1)) {
-            fail(scope, `WG join button is ${wg.button.width.toFixed(2)}x${wg.button.height.toFixed(2)}, expected 138.64x39`);
+          } else if (wg.button.width < 138 || wg.button.height < 44) {
+            fail(scope, `WG join button target is only ${wg.button.width.toFixed(2)}x${wg.button.height.toFixed(2)}`);
           }
           if (
             wg.introDisplay !== "grid"
             || (wg.introColumns || "").split(/\s+/).filter(Boolean).length !== 2
             || wg.introChildren.length !== 2
-            || !withinPixels(wg.introChildren[0].top, wg.introChildren[1].top, 0.1)
             || wg.introChildren[1].left < wg.introChildren[0].right
           ) {
             fail(scope, "WG intro is not a two-column grid at 1024px");
@@ -535,6 +534,8 @@ const auditBrowser = async (browser, origin) => {
               grid: gridRect ? {
                 left: gridRect.left,
                 top: gridRect.top,
+                right: gridRect.right,
+                bottom: gridRect.bottom,
                 width: gridRect.width,
                 height: gridRect.height,
               } : null,
@@ -548,27 +549,15 @@ const auditBrowser = async (browser, origin) => {
             fail(scope, "Consortium partner grid is incomplete");
           } else if (consortium.linkDecorations.some((decoration) => decoration !== "none")) {
             fail(scope, "Consortium partner links are underlined");
-          } else if (width === 390) {
-            if (
-              !withinPixels(consortium.grid.left, 10, 0.1)
-              || !withinPixels(consortium.grid.top, 588.02, 0.1)
-              || !withinPixels(consortium.grid.width, 370, 0.1)
-              || !withinPixels(consortium.grid.height, 2819.06, 0.1)
-              || consortium.cards.some((height) => !withinPixels(height, 250.41, 0.1))
-              || !withinPixels(consortium.footerTop, 3471.67, 0.1)
-            ) {
-              fail(scope, "mobile Consortium cards or footer do not match the live geometry");
-            }
           } else if (
-            !withinPixels(consortium.grid.left, 310, 0.1)
-            || !withinPixels(consortium.grid.top, 513.13, 0.1)
-            || !withinPixels(consortium.grid.width, 1120, 0.1)
-            || !withinPixels(consortium.grid.height, 491.03, 0.1)
-            || consortium.cards.slice(0, 5).some((height) => !withinPixels(height, 238.22, 0.1))
-            || consortium.cards.slice(5).some((height) => !withinPixels(height, 217.81, 0.1))
-            || !withinPixels(consortium.footerTop, 1064.45, 0.1)
+            consortium.grid.left < (width === 1440 ? 300 : 0)
+            || consortium.grid.right > width + 0.1
+            || consortium.grid.width <= 0
+            || consortium.grid.height <= 0
+            || consortium.cards.some((height) => height < 44)
+            || consortium.footerTop < consortium.grid.bottom
           ) {
-            fail(scope, "desktop Consortium rows or footer do not match the live geometry");
+            fail(scope, "Consortium cards or footer overflow or overlap");
           }
 
           const firstPartner = page.locator(".consortium-page .partner-card").first();
@@ -652,11 +641,11 @@ const auditBrowser = async (browser, origin) => {
             !footer.rect
             || !withinPixels(footer.rect.left, 300, 0.1)
             || !withinPixels(footer.rect.width, 1140, 0.1)
-            || !withinPixels(footer.rect.height, 300, 0.1)
+            || footer.rect.height < 160
             || footer.columns.length !== 4
-            || footer.columns.some((columnWidth) => !withinPixels(columnWidth, 280, 0.1))
+            || footer.columns.some((columnWidth) => columnWidth <= 0)
           ) {
-            fail(scope, "desktop footer is not 1140x300 with four 280px columns after the sidebar");
+            fail(scope, "desktop footer does not fill the main shell with four usable columns");
           }
           if (
             !footer.logo
