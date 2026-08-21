@@ -448,7 +448,7 @@ const auditBrowser = async (browser, origin) => {
               researchTop: researchRect?.top,
               publicationDisplay: publications ? getComputedStyle(publications).display : null,
               publicationColumns: publications
-                ? getComputedStyle(publications).gridTemplateColumns.split(/\s+/).filter(Boolean).length
+                ? Number(getComputedStyle(publications).columnCount)
                 : 0,
             };
           });
@@ -460,8 +460,82 @@ const auditBrowser = async (browser, origin) => {
           ) {
             fail(scope, "NIB introduction overlaps the Research section");
           }
-          if (nib.publicationDisplay !== "grid" || nib.publicationColumns !== expectedColumns) {
+          if (nib.publicationDisplay !== "block" || nib.publicationColumns !== expectedColumns) {
             fail(scope, `NIB publications use ${nib.publicationColumns} columns, expected ${expectedColumns}`);
+          }
+        }
+
+        if (route.startsWith("/partners/") && [390, 768, 1440].includes(width)) {
+          const partnerLayout = await page.evaluate(() => {
+            const content = document.querySelector(".detail-content");
+            const publications = [...(content?.querySelectorAll('section[class*="publications"]') || [])].map((section) => {
+              const byColumn = [...section.querySelectorAll("p")].reduce((columns, paragraph) => {
+                const rect = paragraph.getBoundingClientRect();
+                const key = Math.round(rect.left);
+                (columns[key] ||= []).push({ top: rect.top, bottom: rect.bottom });
+                return columns;
+              }, {});
+              const columnHeights = Object.values(byColumn).map((items) => items.at(-1).bottom - items[0].top);
+              const firstParagraph = section.querySelector("p");
+              const paragraphStyle = firstParagraph ? getComputedStyle(firstParagraph) : null;
+              const yearHeadings = [...section.querySelectorAll("p")]
+                .filter((paragraph) => /^\d{4}$/.test(paragraph.textContent.trim()))
+                .length;
+              return {
+                display: getComputedStyle(section).display,
+                columnCount: Number(getComputedStyle(section).columnCount),
+                wrapperDisplays: [...section.children].map((child) => getComputedStyle(child).display),
+                columnCountMeasured: columnHeights.length,
+                columnHeights,
+                fontFamily: paragraphStyle?.fontFamily || "",
+                fontSize: paragraphStyle?.fontSize || "",
+                lineHeight: paragraphStyle?.lineHeight || "",
+                yearHeadings,
+              };
+            });
+            const overlaps = [];
+            for (const parent of content?.querySelectorAll(".detail-image-box-grid, .izrk-project-column") || []) {
+              const cards = [...parent.children].filter((child) => child.matches(".detail-image-box"));
+              for (let first = 0; first < cards.length; first += 1) {
+                for (let second = first + 1; second < cards.length; second += 1) {
+                  const a = cards[first].getBoundingClientRect();
+                  const b = cards[second].getBoundingClientRect();
+                  if (
+                    Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1
+                    && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1
+                  ) {
+                    overlaps.push(true);
+                  }
+                }
+              }
+            }
+            return { publications, overlaps: overlaps.length };
+          });
+          const expectedColumns = width >= 768 ? 2 : 1;
+          for (const publication of partnerLayout.publications) {
+            if (
+              publication.display !== "block"
+              || publication.columnCount !== expectedColumns
+              || publication.columnCountMeasured !== expectedColumns
+              || publication.wrapperDisplays.some((display) => display !== "contents")
+              || !publication.fontFamily.includes("Roboto")
+              || publication.fontSize !== "14px"
+              || Math.abs(Number.parseFloat(publication.lineHeight) - 21.7) > 0.1
+            ) {
+              fail(scope, "partner publications are not using the shared typography and balanced column layout");
+            }
+            if (publication.yearHeadings === 0) {
+              fail(scope, "partner publications are missing a standalone year heading");
+            }
+            if (width === 1440 && publication.columnHeights.length === 2) {
+              const [first, second] = publication.columnHeights;
+              if (Math.abs(first - second) > Math.max(180, Math.max(first, second) * 0.25)) {
+                fail(scope, "partner publication columns are not approximately balanced");
+              }
+            }
+          }
+          if (partnerLayout.overlaps) {
+            fail(scope, "partner project cards overlap");
           }
         }
 
